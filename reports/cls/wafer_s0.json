@@ -1,0 +1,163 @@
+{
+  "best_epoch": 19,
+  "val_macro_f1": 0.8517,
+  "classes": [
+    "none",
+    "Center",
+    "Donut",
+    "Edge-Loc",
+    "Edge-Ring",
+    "Loc",
+    "Near-full",
+    "Random",
+    "Scratch"
+  ],
+  "test_macro_f1": 0.8706,
+  "test_recall": {
+    "none": 0.9761,
+    "Center": 0.9658,
+    "Donut": 0.9759,
+    "Edge-Loc": 0.8823,
+    "Edge-Ring": 0.9835,
+    "Loc": 0.8209,
+    "Near-full": 1.0,
+    "Random": 0.9375,
+    "Scratch": 0.904
+  },
+  "confusion": [
+    [
+      21124,
+      70,
+      0,
+      169,
+      31,
+      141,
+      0,
+      16,
+      90
+    ],
+    [
+      14,
+      621,
+      1,
+      0,
+      0,
+      4,
+      1,
+      2,
+      0
+    ],
+    [
+      0,
+      0,
+      81,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0
+    ],
+    [
+      39,
+      4,
+      1,
+      682,
+      15,
+      24,
+      2,
+      4,
+      2
+    ],
+    [
+      3,
+      0,
+      2,
+      17,
+      1427,
+      1,
+      0,
+      1,
+      0
+    ],
+    [
+      30,
+      20,
+      11,
+      21,
+      0,
+      440,
+      0,
+      4,
+      10
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      21,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      3,
+      1,
+      1,
+      1,
+      2,
+      120,
+      0
+    ],
+    [
+      5,
+      0,
+      0,
+      2,
+      0,
+      10,
+      0,
+      0,
+      160
+    ]
+  ],
+  "n_test": 25453,
+  "tag": "wafer_s0",
+  "date": "2026-09-25",
+  "minutes": 15.0,
+  "config": {
+    "split": "wafer",
+    "exclude": null,
+    "seed": 0,
+    "epochs": 20,
+    "batch": 256,
+    "none_per_epoch": 20000,
+    "lr": 0.002
+  },
+  "train_log": [
+    "ep 01 loss 1.334 val macroF1 0.5281 (45s)",
+    "ep 02 loss 0.932 val macroF1 0.7022 (45s)",
+    "ep 03 loss 1.071 val macroF1 0.6091 (45s)",
+    "ep 04 loss 0.952 val macroF1 0.5734 (45s)",
+    "ep 05 loss 0.894 val macroF1 0.7429 (45s)",
+    "ep 06 loss 0.900 val macroF1 0.7325 (45s)",
+    "ep 07 loss 0.853 val macroF1 0.7287 (45s)",
+    "ep 08 loss 0.813 val macroF1 0.7976 (45s)",
+    "ep 09 loss 0.846 val macroF1 0.7705 (45s)",
+    "ep 10 loss 0.870 val macroF1 0.8261 (45s)",
+    "ep 11 loss 0.847 val macroF1 0.8331 (45s)",
+    "ep 12 loss 0.871 val macroF1 0.8329 (45s)",
+    "ep 13 loss 0.737 val macroF1 0.8356 (45s)",
+    "ep 14 loss 0.782 val macroF1 0.8350 (45s)",
+    "ep 15 loss 0.733 val macroF1 0.8410 (45s)",
+    "ep 16 loss 0.755 val macroF1 0.8369 (45s)",
+    "ep 17 loss 0.653 val macroF1 0.8384 (45s)",
+    "ep 18 loss 0.862 val macroF1 0.8372 (45s)",
+    "ep 19 loss 0.789 val macroF1 0.8517 (45s)",
+    "ep 20 loss 0.752 val macroF1 0.8465 (45s)"
+  ]
+}

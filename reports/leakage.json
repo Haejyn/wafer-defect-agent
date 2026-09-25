@@ -1,0 +1,15 @@
+{
+  "date": "2026-09-25",
+  "lot_test_macro_f1": 0.8527,
+  "wafer_test_macro_f1": 0.8706,
+  "official_test_macro_f1": 0.7434,
+  "gap_wafer_minus_lot": 0.0179,
+  "wafer_split_with_lotmate_in_train": {
+    "n": 25009,
+    "macro_f1": 0.8545
+  },
+  "wafer_split_without_lotmate_in_train": {
+    "n": 444,
+    "macro_f1": 0.8405
+  }
+}
