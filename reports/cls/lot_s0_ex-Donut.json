@@ -1,0 +1,40 @@
+{
+  "best_epoch": 11,
+  "val_macro_f1": 0.864,
+  "classes": [
+    "none",
+    "Center",
+    "Edge-Loc",
+    "Edge-Ring",
+    "Loc",
+    "Near-full",
+    "Random",
+    "Scratch"
+  ],
+  "tag": "lot_s0_ex-Donut",
+  "date": "2026-09-25",
+  "minutes": 8.9,
+  "config": {
+    "split": "lot",
+    "exclude": 2,
+    "seed": 0,
+    "epochs": 12,
+    "batch": 256,
+    "none_per_epoch": 20000,
+    "lr": 0.002
+  },
+  "train_log": [
+    "ep 01 loss 1.161 val macroF1 0.6412 (44s)",
+    "ep 02 loss 0.983 val macroF1 0.7101 (44s)",
+    "ep 03 loss 0.964 val macroF1 0.5659 (44s)",
+    "ep 04 loss 1.275 val macroF1 0.6045 (44s)",
+    "ep 05 loss 0.974 val macroF1 0.6940 (44s)",
+    "ep 06 loss 0.629 val macroF1 0.8314 (44s)",
+    "ep 07 loss 1.001 val macroF1 0.7248 (44s)",
+    "ep 08 loss 0.690 val macroF1 0.8477 (44s)",
+    "ep 09 loss 0.707 val macroF1 0.8639 (44s)",
+    "ep 10 loss 0.750 val macroF1 0.8454 (44s)",
+    "ep 11 loss 0.673 val macroF1 0.8640 (44s)",
+    "ep 12 loss 0.954 val macroF1 0.8552 (44s)"
+  ]
+}
