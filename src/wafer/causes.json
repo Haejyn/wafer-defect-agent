@@ -1,0 +1,35 @@
+{
+  "_note": "패턴 → 원인 공정 후보. 판독 에이전트는 이 표 안의 원인만 쓸 수 있다. 문장은 출처 원문을 옮긴 것이고, 원인 '후보'이지 확정이 아니다. 2026-09-25 정리.",
+  "sources": {
+    "S1": "Chen, Zhao, Xu, Li, Ji, \"Wafer defect recognition method based on multi-scale feature fusion,\" Frontiers in Neuroscience 17:1202985, 2023. doi:10.3389/fnins.2023.1202985 — 원 인용: Cheon, Lee, Kim, Lee, \"Convolutional neural network for wafer surface defect classification and the detection of unknown defect class,\" IEEE TSM 32:163-170, 2019. doi:10.1109/TSM.2019.2902657",
+    "S2": "Shin, Yoo, \"Efficient Convolutional Neural Networks for Semiconductor Wafer Bin Map Classification,\" Sensors 23(4):1926, 2023. doi:10.3390/s23041926"
+  },
+  "patterns": {
+    "Center": [
+      {"cause_id": "deposition", "cause": "박막 증착 단계 이상", "quote": "A center often arises due to problems in the thin film deposition", "source": "S1"},
+      {"cause_id": "particle", "cause": "공정 중 파티클(이물) 발생", "quote": "Clustered defect patterns, such as center, edge-loc, and loc, are commonly found when particles ... are generated during the process.", "source": "S2"}
+    ],
+    "Edge-Ring": [
+      {"cause_id": "etch", "cause": "식각 단계 이상", "quote": "a ring is due to problems in the etching step", "source": "S1"}
+    ],
+    "Scratch": [
+      {"cause_id": "handling", "cause": "장비 핸들링(이송) 문제", "quote": "a scratch is a result of machine handing problems", "source": "S1"}
+    ],
+    "Donut": [
+      {"cause_id": "etch_uniformity", "cause": "식각 균일도 저하", "quote": "Circular patterns such as donuts often occur when the uniformity is low due to an improperly performed etching process", "source": "S2"}
+    ],
+    "Edge-Loc": [
+      {"cause_id": "particle", "cause": "공정 중 파티클(이물) 발생", "quote": "Clustered defect patterns, such as center, edge-loc, and loc, are commonly found when particles ... are generated during the process.", "source": "S2"}
+    ],
+    "Loc": [
+      {"cause_id": "particle", "cause": "공정 중 파티클(이물) 발생", "quote": "Clustered defect patterns, such as center, edge-loc, and loc, are commonly found when particles ... are generated during the process.", "source": "S2"}
+    ],
+    "Random": [
+      {"cause_id": "early_process", "cause": "초기 공정 단계 이상", "quote": "Types such as random and near-full could be wrong from the initial process.", "source": "S2"}
+    ],
+    "Near-full": [
+      {"cause_id": "early_process", "cause": "초기 공정 단계 이상", "quote": "Types such as random and near-full could be wrong from the initial process.", "source": "S2"}
+    ],
+    "none": []
+  }
+}
