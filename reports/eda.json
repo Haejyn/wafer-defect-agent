@@ -1,0 +1,83 @@
+{
+  "rows": 811457,
+  "failureType": {
+    "[0 0]": 638507,
+    "none": 147431,
+    "Edge-Ring": 9680,
+    "Edge-Loc": 5189,
+    "Center": 4294,
+    "Loc": 3593,
+    "Scratch": 1193,
+    "Random": 866,
+    "Donut": 555,
+    "Near-full": 149
+  },
+  "trainTestLabel": {
+    "[0 0]": 638507,
+    "Test": 118595,
+    "Training": 54355
+  },
+  "labeled_by_split_type": {
+    "Test": {
+      "Center": 832,
+      "Donut": 146,
+      "Edge-Loc": 2772,
+      "Edge-Ring": 1126,
+      "Loc": 1973,
+      "Near-full": 95,
+      "Random": 257,
+      "Scratch": 693,
+      "none": 110701
+    },
+    "Training": {
+      "Center": 3462,
+      "Donut": 409,
+      "Edge-Loc": 2417,
+      "Edge-Ring": 8554,
+      "Loc": 1620,
+      "Near-full": 54,
+      "Random": 609,
+      "Scratch": 500,
+      "none": 36730
+    }
+  },
+  "lots": {
+    "train": 5809,
+    "test": 4953,
+    "shared": 0
+  },
+  "labeled_shapes_distinct": 346,
+  "labeled_shapes_top10": {
+    "(25, 27)": 18781,
+    "(26, 26)": 14366,
+    "(30, 34)": 12400,
+    "(29, 26)": 11751,
+    "(27, 25)": 10682,
+    "(39, 37)": 10173,
+    "(33, 29)": 8125,
+    "(42, 44)": 6724,
+    "(44, 41)": 6134,
+    "(41, 33)": 5091
+  },
+  "pixel_values_sample": {
+    "0": 2000,
+    "1": 2000,
+    "2": 2000
+  },
+  "exact_dup_maps": {
+    "within_labeled": 3252,
+    "test_maps_also_in_train": 3158,
+    "test_size": 118595
+  },
+  "test_dups_by_type": {
+    "none": 3057,
+    "Edge-Loc": 37,
+    "Loc": 21,
+    "Random": 14,
+    "Scratch": 11,
+    "Edge-Ring": 6,
+    "Center": 6,
+    "Near-full": 6
+  },
+  "same_map_different_label_groups": 14
+}

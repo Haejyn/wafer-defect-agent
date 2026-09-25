@@ -1,0 +1,38 @@
+{
+  "labeled_lots": 10762,
+  "wafers_per_lot": {
+    "count": 10762.0,
+    "mean": 16.07,
+    "std": 10.58,
+    "min": 1.0,
+    "25%": 2.0,
+    "50%": 23.0,
+    "75%": 25.0,
+    "max": 25.0
+  },
+  "defect_lots_with_2plus": 3669,
+  "p_same_pattern_within_lot_pair": 0.9273,
+  "defect_lot_dominant_share_mean": 0.7878,
+  "label_count_per_type_in_lot_median": {
+    "Center": 1.0,
+    "Donut": 1.0,
+    "Edge-Loc": 1.0,
+    "Edge-Ring": 2.0,
+    "Loc": 1.0,
+    "Near-full": 1.0,
+    "Random": 1.0,
+    "Scratch": 1.0
+  },
+  "lotnum_range_by_split": {
+    "Test": {
+      "min": 40328.0,
+      "max": 47542.0,
+      "median": 44422.0
+    },
+    "Training": {
+      "min": 1.0,
+      "max": 46729.0,
+      "median": 36921.0
+    }
+  }
+}
