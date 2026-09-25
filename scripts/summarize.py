@@ -54,6 +54,9 @@ if "gap_wafer_minus_lot" in leak:
 if best_ood:
     summary["처음 보는 패턴 AUROC (8종 평균)"] = f'{best_ood[1]["mean_auroc"]:.3f}'
     summary["오경보 5%에서 처음 보는 패턴 재현율"] = f'{best_ood[1]["mean_recall_at_fpr5"] * 100:.0f}%'
+he = load("heatmap_eval.json")
+if he:
+    summary["히트맵이 결함을 짚은 비율 (Grad-CAM · 무작위 점)"] = f'{he["overall"]["gradcam_b3"] * 100:.0f}% · {he["overall"]["random_point"] * 100:.0f}%'
 if ms:
     summary["유사 사례 정밀도@5"] = f'{ms["cnn_embedding"]["precision_at_5_macro"]:.3f}'
 if ag:

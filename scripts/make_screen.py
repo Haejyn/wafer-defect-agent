@@ -42,27 +42,25 @@ def wafer_png(m, size=2.2, heat=None):
     fig, ax = plt.subplots(figsize=(size, size))
     ax.imshow(m, cmap=WAFER_CMAP, vmin=0, vmax=2, interpolation="nearest")
     if heat is not None:
-        h = np.ma.masked_where(m == 0, heat)
-        ax.imshow(h, cmap="magma", alpha=0.72, interpolation="bilinear")
+        # 이상 점수가 높은 곳만 진하게 — 낮은 곳은 투명하게 두어 원본 불량 다이가 보이게 한다
+        a = np.clip((heat - 0.45) / 0.55, 0, 1) * 0.85
+        a[m == 0] = 0
+        rgba = plt.get_cmap("plasma")(heat)
+        rgba[..., 3] = a
+        ax.imshow(rgba, interpolation="bilinear")
     ax.axis("off")
     return png(fig)
 
 
-# 히트맵 — 전체 모델의 패치 특징을 정상(none) 학습 웨이퍼 패치와 비교 (PatchCore 식)
+# 히트맵 — Grad-CAM(b3, 16×16). 09-25 패치 kNN 히트맵은 결함을 짚는 비율 25.7 % 로 무작위 점(35.9 %)보다 못해 바꿨다 (reports/heatmap_eval.json)
+from wafer.heat import gradcam_heat  # noqa: E402
+
 model = WaferCNN(9).to(device)
 model.load_state_dict(torch.load(ROOT / "runs/lot_s0.pt", map_location=device))
-rng = np.random.default_rng(0)
-normal_rows = rng.choice(np.flatnonzero((split == 0) & (y == 0)), 6000, replace=False)
-nmaps, _ = feature_maps(model, X[normal_rows], device)
-bank = patch_bank(nmaps, 300_000)
 
 
 def heatmap(i):
-    maps, _ = feature_maps(model, X[i:i + 1], device)
-    h, _ = patch_scores(maps, bank, device)
-    t = torch.from_numpy(h[None]).float()
-    up = F.interpolate(t, size=(64, 64), mode="bilinear", align_corners=False)[0, 0].numpy()
-    return (up - up.min()) / (up.max() - up.min() + 1e-9)
+    return gradcam_heat(model, X[i], device, "b3")
 
 
 cause_text = {c["cause_id"]: c for lst in CAUSES["patterns"].values() for c in lst}
@@ -81,7 +79,7 @@ def card_html(r):
     return f"""
 <section class="case">
   <figure class="big"><img src="{wafer_png(X[c["row"]])}"><figcaption>원본 · 라벨 {c["true"]}</figcaption></figure>
-  <figure class="big"><img src="{wafer_png(X[c["row"]], heat=heatmap(c["row"]))}"><figcaption>이상 히트맵</figcaption></figure>
+  <figure class="big"><img src="{wafer_png(X[c["row"]], heat=heatmap(c["row"]))}"><figcaption>히트맵 (Grad-CAM)</figcaption></figure>
   <div class="verdict">
     <div class="pattern">{html.escape(c["pattern"])} {warn}</div>
     <div class="kv"><span>분류 확신도</span><b>{c["confidence"]:.2f}</b></div>

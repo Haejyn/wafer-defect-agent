@@ -12,6 +12,17 @@ LOCATIONS = ["중심", "도넛", "가장자리", "링", "선", "국부", "전면
 EIGHT = np.ones((3, 3))
 
 
+def systematic_mask(m: np.ndarray, min_cluster_frac: float = 0.004, min_cluster_px: int = 12) -> np.ndarray:
+    """배경 잡음(작은 덩어리)을 뺀 계통 불량 다이 마스크 — 히트맵이 제자리를 짚는지 채점할 때 정답으로 쓴다."""
+    wafer, fail = m > 0, m == 2
+    lab, n = ndimage.label(fail, structure=EIGHT)
+    if n == 0:
+        return np.zeros_like(fail)
+    sizes = ndimage.sum(fail, lab, range(1, n + 1))
+    keep_min = max(min_cluster_px, int(min_cluster_frac * wafer.sum()))
+    return np.isin(lab, [i + 1 for i, s in enumerate(sizes) if s >= keep_min])
+
+
 def describe(m: np.ndarray, min_cluster_frac: float = 0.004, min_cluster_px: int = 12) -> dict:
     """m: 값 0(밖)·1(정상)·2(불량) 맵. 위치 이름과 근거 수치."""
     wafer = m > 0

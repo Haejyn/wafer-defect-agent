@@ -1,0 +1,62 @@
+{
+  "date": "2026-09-25",
+  "metric": "pointing game — 히트맵 최댓값이 계통 불량 덩어리(2픽셀 팽창) 위",
+  "per_class": {
+    "Center": {
+      "knn_patch": 0.354,
+      "gradcam_b3": 0.657,
+      "gradcam_b4": 0.566,
+      "random_point": 0.424,
+      "n": 99
+    },
+    "Donut": {
+      "knn_patch": 0.141,
+      "gradcam_b3": 0.615,
+      "gradcam_b4": 0.603,
+      "random_point": 0.462,
+      "n": 78
+    },
+    "Edge-Loc": {
+      "knn_patch": 0.22,
+      "gradcam_b3": 0.52,
+      "gradcam_b4": 0.3,
+      "random_point": 0.25,
+      "n": 100
+    },
+    "Edge-Ring": {
+      "knn_patch": 0.073,
+      "gradcam_b3": 0.562,
+      "gradcam_b4": 0.417,
+      "random_point": 0.25,
+      "n": 96
+    },
+    "Loc": {
+      "knn_patch": 0.21,
+      "gradcam_b3": 0.51,
+      "gradcam_b4": 0.33,
+      "random_point": 0.17,
+      "n": 100
+    },
+    "Random": {
+      "knn_patch": 0.66,
+      "gradcam_b3": 0.92,
+      "gradcam_b4": 0.95,
+      "random_point": 0.8,
+      "n": 100
+    },
+    "Scratch": {
+      "knn_patch": 0.105,
+      "gradcam_b3": 0.663,
+      "gradcam_b4": 0.579,
+      "random_point": 0.168,
+      "n": 95
+    }
+  },
+  "overall": {
+    "knn_patch": 0.257,
+    "gradcam_b3": 0.636,
+    "gradcam_b4": 0.533,
+    "random_point": 0.359
+  },
+  "n": 668
+}

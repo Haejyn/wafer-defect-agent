@@ -441,5 +441,13 @@
       "99": 0.0709,
       "99.9": 0.2216
     }
+  },
+  "umap": {
+    "points": 82374,
+    "labeled_defect": 25519,
+    "none": 15000,
+    "unlabeled_random": 40000,
+    "unlabeled_most_novel": 2000,
+    "minutes": 3.0
   }
 }
