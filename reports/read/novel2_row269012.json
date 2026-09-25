@@ -1,0 +1,78 @@
+{
+  "case": {
+    "row": -1,
+    "true": "라벨 없음",
+    "classifier_pred": "none",
+    "pattern": "처음 보는 패턴",
+    "confidence": 0.29098790884017944,
+    "unknown_flag": true,
+    "ood_percentile": 100.0,
+    "location": "전면",
+    "location_features": {
+      "fail_ratio": 0.7563,
+      "n_clusters": 53,
+      "n_systematic_clusters": 10,
+      "systematic_share": 0.877,
+      "location": "전면"
+    },
+    "fail_ratio": 0.7563,
+    "similar": [
+      {
+        "pattern": "Edge-Ring",
+        "similarity": 0.6637513041496277,
+        "row": 104105
+      },
+      {
+        "pattern": "Edge-Ring",
+        "similarity": 0.6537694334983826,
+        "row": 8227
+      },
+      {
+        "pattern": "Edge-Ring",
+        "similarity": 0.648992657661438,
+        "row": 104026
+      },
+      {
+        "pattern": "Edge-Ring",
+        "similarity": 0.6471034288406372,
+        "row": 104720
+      },
+      {
+        "pattern": "Edge-Ring",
+        "similarity": 0.6402879357337952,
+        "row": 104628
+      }
+    ]
+  },
+  "attempts": [
+    {
+      "card": {
+        "pattern": "처음 보는 패턴",
+        "location": "전면",
+        "cause_ids": [],
+        "check_order": [
+          "이 웨이퍼는 처음 보는 패턴으로 분류기 확신이 낮습니다.",
+          "불량 위치가 전면이고 다이 비율이 높으므로 공정 조건을 확인하세요.",
+          "과거 유사 패턴이 Edge-Ring 으로 보이지만 원인은 아직 확정되지 않았습니다."
+        ],
+        "summary": "처음 보는 패턴 경고가 켜졌고, 원인 표에 없는 새로운 불량 패턴입니다. 사람이 직접 확인해야 합니다."
+      },
+      "problems": []
+    }
+  ],
+  "final": {
+    "pattern": "처음 보는 패턴",
+    "location": "전면",
+    "cause_ids": [],
+    "check_order": [
+      "이 웨이퍼는 처음 보는 패턴으로 분류기 확신이 낮습니다.",
+      "불량 위치가 전면이고 다이 비율이 높으므로 공정 조건을 확인하세요.",
+      "과거 유사 패턴이 Edge-Ring 으로 보이지만 원인은 아직 확정되지 않았습니다."
+    ],
+    "summary": "처음 보는 패턴 경고가 켜졌고, 원인 표에 없는 새로운 불량 패턴입니다. 사람이 직접 확인해야 합니다."
+  },
+  "pass_first": true,
+  "pass_final": true,
+  "seconds": 1.6,
+  "model": "qwen3.5:4b"
+}

@@ -1,0 +1,78 @@
+{
+  "case": {
+    "row": -1,
+    "true": "라벨 없음",
+    "classifier_pred": "none",
+    "pattern": "처음 보는 패턴",
+    "confidence": 0.28480297327041626,
+    "unknown_flag": true,
+    "ood_percentile": 100.0,
+    "location": "전면",
+    "location_features": {
+      "fail_ratio": 0.7582,
+      "n_clusters": 55,
+      "n_systematic_clusters": 11,
+      "systematic_share": 0.915,
+      "location": "전면"
+    },
+    "fail_ratio": 0.7582,
+    "similar": [
+      {
+        "pattern": "Edge-Ring",
+        "similarity": 0.6346544027328491,
+        "row": 25281
+      },
+      {
+        "pattern": "Edge-Ring",
+        "similarity": 0.6276348233222961,
+        "row": 104026
+      },
+      {
+        "pattern": "Edge-Ring",
+        "similarity": 0.6264000535011292,
+        "row": 15671
+      },
+      {
+        "pattern": "Edge-Ring",
+        "similarity": 0.6222395300865173,
+        "row": 8227
+      },
+      {
+        "pattern": "Edge-Ring",
+        "similarity": 0.6215976476669312,
+        "row": 104720
+      }
+    ]
+  },
+  "attempts": [
+    {
+      "card": {
+        "pattern": "처음 보는 패턴",
+        "location": "전면",
+        "cause_ids": [],
+        "check_order": [
+          "이 웨이퍼는 처음 보는 패턴으로 분류기 확신이 낮습니다.",
+          "불량 위치가 전면이고 불량 다이 비율이 높습니다.",
+          "원인 표에 해당 패턴이 없으므로 공정 이름을 새로 만들 수 없습니다."
+        ],
+        "summary": "처음 보는 패턴 경고가 켜졌고, 원인 후보가 없어 사람이 확인해야 합니다."
+      },
+      "problems": []
+    }
+  ],
+  "final": {
+    "pattern": "처음 보는 패턴",
+    "location": "전면",
+    "cause_ids": [],
+    "check_order": [
+      "이 웨이퍼는 처음 보는 패턴으로 분류기 확신이 낮습니다.",
+      "불량 위치가 전면이고 불량 다이 비율이 높습니다.",
+      "원인 표에 해당 패턴이 없으므로 공정 이름을 새로 만들 수 없습니다."
+    ],
+    "summary": "처음 보는 패턴 경고가 켜졌고, 원인 후보가 없어 사람이 확인해야 합니다."
+  },
+  "pass_first": true,
+  "pass_final": true,
+  "seconds": 1.5,
+  "model": "qwen3.5:4b"
+}

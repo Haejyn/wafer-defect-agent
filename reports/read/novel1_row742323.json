@@ -1,0 +1,84 @@
+{
+  "case": {
+    "row": -1,
+    "true": "라벨 없음",
+    "classifier_pred": "Near-full",
+    "pattern": "처음 보는 패턴",
+    "confidence": 0.34597864747047424,
+    "unknown_flag": true,
+    "ood_percentile": 100.0,
+    "location": "국부",
+    "location_features": {
+      "fail_ratio": 0.3505,
+      "n_clusters": 9,
+      "n_systematic_clusters": 3,
+      "systematic_share": 0.529,
+      "largest_px": 24,
+      "largest_r_median": 0.421,
+      "largest_r_min": 0.323,
+      "largest_sectors_of_12": 2,
+      "largest_elongation": 1.42,
+      "largest_thickness": 2.29,
+      "location": "국부"
+    },
+    "fail_ratio": 0.3505,
+    "similar": [
+      {
+        "pattern": "Edge-Ring",
+        "similarity": 0.6470600366592407,
+        "row": 15671
+      },
+      {
+        "pattern": "Near-full",
+        "similarity": 0.6467761993408203,
+        "row": 112605
+      },
+      {
+        "pattern": "Near-full",
+        "similarity": 0.6437825560569763,
+        "row": 113165
+      },
+      {
+        "pattern": "Near-full",
+        "similarity": 0.640380859375,
+        "row": 152905
+      },
+      {
+        "pattern": "Near-full",
+        "similarity": 0.6401311159133911,
+        "row": 35339
+      }
+    ]
+  },
+  "attempts": [
+    {
+      "card": {
+        "pattern": "처음 보는 패턴",
+        "location": "국부",
+        "cause_ids": [],
+        "check_order": [
+          "이 웨이퍼는 처음 보는 패턴으로 분류기 확신이 낮습니다.",
+          "원인 표에 해당 패턴이 없으므로 공정별 확인이 필요합니다.",
+          "불량 다이 비율이 높으니 우선순위 높은 공정을 먼저 점검하세요."
+        ],
+        "summary": "처음 보는 패턴 경고가 켜졌고 원인 후보가 없습니다. 사람이 직접 확인해야 합니다."
+      },
+      "problems": []
+    }
+  ],
+  "final": {
+    "pattern": "처음 보는 패턴",
+    "location": "국부",
+    "cause_ids": [],
+    "check_order": [
+      "이 웨이퍼는 처음 보는 패턴으로 분류기 확신이 낮습니다.",
+      "원인 표에 해당 패턴이 없으므로 공정별 확인이 필요합니다.",
+      "불량 다이 비율이 높으니 우선순위 높은 공정을 먼저 점검하세요."
+    ],
+    "summary": "처음 보는 패턴 경고가 켜졌고 원인 후보가 없습니다. 사람이 직접 확인해야 합니다."
+  },
+  "pass_first": true,
+  "pass_final": true,
+  "seconds": 5.5,
+  "model": "qwen3.5:4b"
+}
