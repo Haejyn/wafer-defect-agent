@@ -8,7 +8,18 @@
 
 ## 요약
 
-<!-- SUMMARY -->
+| 무엇 | 값 | 어떻게 잼 |
+|---|---|---|
+| 아는 패턴 분류 macro-F1 | **0.853** | 로트 단위 분할 test 25,354장, 9종 |
+| 처음 보는 패턴 가려내기 AUROC | **0.919** (분류기 확신도는 0.549) | 불량 8종을 하나씩 학습에서 빼고 그 패턴을 맞히기, 8번 평균 |
+| 오경보 5 %에서 처음 보는 패턴 재현율 | **57 %** | 위와 같음 |
+| 유사 사례 정밀도@5 | **0.856** (원본 픽셀 비교 0.459) | 로트 test 불량 3,941장 → 로트 train 에서 검색 |
+| 히트맵이 결함을 짚은 비율 | **64 %** (무작위 점 36 %) | Grad-CAM 최댓값이 계통 불량 덩어리 위, 668장 |
+| 판독 카드 검사 통과 | 첫 답 **94 %** → 재질문 뒤 **98 %** | 120장, 로컬 qwen3.5:4b, 1.7초/장 (v3 프롬프트·검사기) |
+| 나중 로트에서 성능 하락 | 같은 시기 검증 0.963 → 나중 로트 **0.743** | 공식 분할(시간순) |
+
+![처음 보는 패턴 AUROC](docs/img/ood.png)
+
 
 ## 왜 이렇게 만들었나
 
@@ -25,7 +36,7 @@ flowchart LR
     P --> E["임베딩 256"]
     E --> K["kNN 거리<br/>처음 보는 패턴 경고"]
     E --> S["유사 사례 top-5"]
-    P --> H["패치 kNN<br/>이상 히트맵"]
+    P --> H["Grad-CAM<br/>히트맵"]
     P --> L["위치 계산<br/>중심·링·선…"]
     C & K & S & L --> A["LLM 판독 카드<br/>(Ollama qwen3.5)"]
     T["원인 표<br/>논문 인용"] --> A
@@ -41,11 +52,27 @@ flowchart LR
 | 3 처음 보는 패턴 | `scripts/ood_eval.py` | `reports/2026-09-25_step3_unseen.md` |
 | 4 지도·검색 | `scripts/prep_all.py` · `map_search.py` | `reports/map_search.json` |
 | 5 판독 에이전트 | `scripts/agent_eval.py` | `reports/agent_eval.json` |
-| 6 화면 | `scripts/make_screen.py` | `reports/screen/index.html` |
+| 6 화면 · 한 장 판독 | `scripts/make_screen.py` · `read_wafer.py` | `reports/screen/index.html` · `reports/read/` |
 
 ## 검증
 
-<!-- VERIFY -->
+틀렸던 가설과 고친 결정도 지우지 않고 남겼다 — `reports/2026-09-25_step*.md`.
+
+| 확인한 것 | 결과 |
+|---|---|
+| "공식 분할이 같은 로트를 섞어 부풀린다" | **틀림** — 공식 분할은 로트가 겹치지 않는다. 대신 분할 사이 똑같은 맵 3,158장을 찾아 뺐다 |
+| "웨이퍼 무작위 분할은 크게 부풀린다" (같은 로트 불량 쌍이 같은 패턴일 확률 0.927) | **작았다** — 로트 분할 대비 +0.018 F1 (시드 1) |
+| 패치 kNN(PatchCore 식) 히트맵 | **무작위보다 못함** (26 % 대 36 %) → Grad-CAM 으로 바꿈 |
+| 판독 프롬프트 v1 | 4b 가 조건부 규칙을 늘 따라 해 경고 없는 웨이퍼 95장에 "처음 보는 패턴" → 규칙을 경고가 켜졌을 때만 넣음(v2) |
+| 판독 v2 | 검사를 통과한 카드에 "양자역학적 불안정성" — 근거 표가 없는 처음 보는 패턴에서 LLM 이 빈칸을 채웠다 → 점검 순서를 고정 선택지로, 표 밖 공정 어휘 검사 추가(v3). 같은 검사기로 첫 답 통과 v1 8 % → v2 77 % → v3 94 % |
+| 라벨 없는 웨이퍼 중 '가장 낯선' 200장 | 새 패턴이 아니라 **깨진 모양의 맵**(면적 30 % 미만, 불량률 50 % 초과) — 맵 품질 검사가 앞에 필요 |
+| 검사기 자체 | 스모크에서 오검출 1·누락 1, v2 에서 지어낸 공정 누락 → 모두 시험으로 고정. 어휘 목록 밖의 지어낸 말은 여전히 못 잡는다 |
+
+시험 (`python -m pytest`, 32개): 리사이즈 값 보존(성질 기반) · 중복 제거 · **로트 분할에서 같은 로트가 두 분할에 없음**(무작위 50회 + 실제 캐시) · 지표를 scikit-learn 과 대조 · AUROC 동점 처리 · 오경보 문턱 · 위치 계산(합성 웨이퍼 8종, 회전 불변) · 판독 검사기가 위반 8종을 잡는지
+
+![81만 장 지도](docs/img/umap.png)
+<sub>UMAP 표본 82,374점 (라벨 불량 전부 + none 1.5만 + 라벨 없음 4만 + 가장 낯선 2천). 대화형 판은 `reports/screen/index.html`</sub>
+
 
 ## 실행
 
@@ -56,9 +83,10 @@ python -m venv --system-site-packages .venv      # torch(CUDA) 는 시스템 것
 python scripts/eda.py && python scripts/prep.py && python scripts/prep_all.py
 bash scripts/run_queue.sh "--split lot" "--split wafer" "--split official"
 bash scripts/run_queue.sh "--split lot --exclude Center --epochs 12"   # … 8종
-python scripts/ood_eval.py && python scripts/map_search.py
+python scripts/ood_eval.py && python scripts/heatmap_eval.py && python scripts/map_search.py && python scripts/umap_map.py
 ollama pull qwen3.5:4b && python scripts/agent_eval.py
-python scripts/summarize.py && python scripts/make_screen.py
+python scripts/summarize.py && python scripts/make_screen.py && python scripts/make_figures.py
+python scripts/read_wafer.py --novel 1          # 한 장 판독 (--row N · --npy 파일)
 python -m pytest
 ```
 

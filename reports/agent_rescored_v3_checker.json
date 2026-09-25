@@ -1,0 +1,20 @@
+{
+  "v1": {
+    "first": 0.075,
+    "final": 0.2917,
+    "final_invented_process": 1,
+    "unseen_final": 0.125
+  },
+  "v2": {
+    "first": 0.7667,
+    "final": 0.7917,
+    "final_invented_process": 3,
+    "unseen_final": 0.375
+  },
+  "v3": {
+    "first": 0.9417,
+    "final": 0.975,
+    "final_invented_process": 1,
+    "unseen_final": 1.0
+  }
+}

@@ -66,6 +66,26 @@ def test_unknown_rule_only_in_prompt_when_flagged():
     assert "처음 보는 패턴 경고가 켜졌다" in build_prompt(flagged)
 
 
+def test_invented_process_is_caught():
+    """v2 에서 통과해 버린 '양자역학적 불안정성'·'가스 분포' (09-25)."""
+    bad = dict(GOOD, check_order=["식각 균일도 확인", "반응기 내부 기압 및 가스 분포 점검"])
+    assert any("원인 표에 없는 공정" in p for p in check(CASE, bad))
+    case = dict(CASE, pattern=UNKNOWN, unknown_flag=True)
+    card = {"pattern": UNKNOWN, "location": "링", "cause_ids": [], "summary": "양자역학적 불안정성일 수 있다. 사람이 확인해야 한다.",
+            "check_order": ["수율 엔지니어에게 판독 요청", "유사 사례 웨이퍼와 공정 이력을 비교"]}
+    assert any("원인 표에 없는 공정" in p for p in check(case, card))
+
+
+def test_unknown_steps_must_come_from_fixed_list():
+    from wafer.agent import UNKNOWN_STEPS
+    case = dict(CASE, pattern=UNKNOWN, unknown_flag=True)
+    ok = {"pattern": UNKNOWN, "location": "링", "cause_ids": [], "summary": "원인 표에 없어 사람이 확인해야 한다.",
+          "check_order": UNKNOWN_STEPS[:2]}
+    assert check(case, ok) == []
+    bad = dict(ok, check_order=[UNKNOWN_STEPS[0], "새로운 물리 현상 조사"])
+    assert any("정해진 선택지" in p for p in check(case, bad))
+
+
 def test_prompt_lists_only_allowed_causes():
     p = build_prompt(CASE)
     assert "etch:" in p and "handling:" not in p and "deposition:" not in p

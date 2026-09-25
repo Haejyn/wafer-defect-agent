@@ -59,7 +59,19 @@ def build_prompt(case: dict) -> str:
 
 # v1(09-25): 규칙 5 에 "처음 보는 패턴이면 …라고 쓴다"를 늘 넣었더니, 4b 가 경고가 꺼진 웨이퍼 96장 중 95장에
 # "처음 보는 패턴이므로 확인이 필요"를 붙였다 → 경고가 켜졌을 때만 그 규칙을 넣는다(v2).
-UNKNOWN_RULE = "\n6. 이 웨이퍼는 처음 보는 패턴 경고가 켜졌다. 원인 표에 없으니 사람이 확인해야 한다고 쓴다."
+# v2: 근거 표가 없는 처음 보는 패턴 카드 24장 중 2장이 "양자역학적 불안정성"을 지어냈다 → 점검 순서를 고정 선택지에서만 고른다(v3).
+UNKNOWN_STEPS = [
+    "같은 로트의 다른 웨이퍼에 같은 모양이 있는지 확인",
+    "유사 사례 웨이퍼와 공정 이력을 비교",
+    "맵 자체가 정상인지(웨이퍼 모양·다이 수) 확인",
+    "수율 엔지니어에게 판독 요청",
+]
+UNKNOWN_RULE = ("\n6. 이 웨이퍼는 처음 보는 패턴 경고가 켜졌다. 원인 표에 없으니 사람이 확인해야 한다고 쓴다. 원인을 추측하지 않는다."
+                "\n7. check_order 는 아래 문장 중에서만 2~4개를 골라 그대로 쓴다:\n" + "\n".join(f"   - {s}" for s in UNKNOWN_STEPS))
+
+# 원인 표 밖 공정·현상 어휘 — 표에 없는 원인을 지어냈는지 보는 목록(완전하지 않다: 목록 밖 낱말은 못 잡는다)
+PROCESS_TERMS = ["양자", "플라즈마", "리소그래피", "노광", "포토", "세정", "CMP", "연마", "열처리", "어닐", "증착", "식각", "에칭",
+                 "이온", "도핑", "산화", "확산", "배선", "정전기", "온도", "습도", "진공", "가스", "레시피", "응력", "불안정", "기압"]
 
 
 def _prompt_rules(case: dict) -> str:
@@ -96,6 +108,14 @@ def check(case: dict, card: dict) -> list[str]:
                          for s in re.split(r"[.!?\n]|(?<=다)\s", text))
     if not case["unknown_flag"] and claims_unknown:
         problems.append("처음 보는 패턴 경고가 없는데 처음 보는 패턴이라고 썼다")
+    grounded = " ".join(c["cause"] + " " + c["quote"] for c in allowed_causes(case["pattern"]))
+    invented = sorted({t for t in PROCESS_TERMS if t in text and t not in grounded})
+    if invented:
+        problems.append(f"원인 표에 없는 공정·현상을 언급했다: {invented}")
+    if case["unknown_flag"]:
+        off = [s for s in card.get("check_order", []) if s.strip() not in UNKNOWN_STEPS]
+        if off:
+            problems.append(f"처음 보는 패턴의 점검 순서는 정해진 선택지에서만: {off}")
     if not (2 <= len(card.get("check_order", [])) <= 4):
         problems.append("check_order 는 2~4개")
     return problems
