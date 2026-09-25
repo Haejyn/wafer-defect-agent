@@ -70,7 +70,8 @@ flowchart LR
 
 ## 히트맵
 
-![히트맵](docs/img/heat.png)
+<img src="docs/img/heat.png" alt="히트맵" width="620">
+
 <sub>그림 4. 원본 · 패치 kNN(PatchCore 식) · Grad-CAM. 로트 test 불량 668장 pointing game — 패치 kNN 26 % · 무작위 36 % · Grad-CAM 64 %</sub>
 
 - 패치 kNN: 결함 대신 웨이퍼 가장자리 모양에 반응 → 무작위보다 못함
@@ -79,7 +80,8 @@ flowchart LR
 
 ## 판독 에이전트
 
-![판독 검사](docs/img/agent.png)
+<img src="docs/img/agent.png" alt="판독 검사" width="440">
+
 <sub>그림 5. 같은 120장 · 같은 검사기로 다시 채점한 판독 카드 검사 통과율</sub>
 
 | 판 | 문제 | 고친 것 |
