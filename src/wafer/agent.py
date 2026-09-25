@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import time
 import urllib.request
 from pathlib import Path
@@ -35,6 +36,7 @@ def build_prompt(case: dict) -> str:
     cands = allowed_causes(pattern)
     cand_text = "\n".join(f'- {c["cause_id"]}: {c["cause"]} (근거: "{c["quote"]}" [{c["source"]}])' for c in cands) or "- (없음 — 원인 표에 없는 패턴이다)"
     sim = ", ".join(f'{s["pattern"]}({s["similarity"]:.2f})' for s in case["similar"])
+    unknown_rule = _prompt_rules(case)
     return f"""당신은 반도체 수율 엔지니어를 돕는 웨이퍼 맵 판독 보조다. 아래 사실만 써서 판독 카드를 JSON 으로 쓴다.
 
 [사실 — 코드가 계산한 값, 바꾸지 말 것]
@@ -52,7 +54,16 @@ def build_prompt(case: dict) -> str:
 2. location 은 계산값 "{case["location"]}" 을 그대로 쓴다.
 3. cause_ids 는 위 목록의 id 만. 목록이 없으면 빈 배열.
 4. check_order 는 엔지니어가 확인할 순서 2~4개, 한 줄씩 한국어. 원인 후보와 위치에서만 이끌어 낸다. 목록에 없는 공정 이름을 새로 만들지 않는다.
-5. summary 는 한국어 2문장 이내. 확정하지 말고 '후보'라고 쓴다. 처음 보는 패턴이면 원인 표에 없으니 사람이 확인해야 한다고 쓴다."""
+5. summary 는 한국어 2문장 이내. 확정하지 말고 '후보'라고 쓴다.{unknown_rule}"""
+
+
+# v1(09-25): 규칙 5 에 "처음 보는 패턴이면 …라고 쓴다"를 늘 넣었더니, 4b 가 경고가 꺼진 웨이퍼 96장 중 95장에
+# "처음 보는 패턴이므로 확인이 필요"를 붙였다 → 경고가 켜졌을 때만 그 규칙을 넣는다(v2).
+UNKNOWN_RULE = "\n6. 이 웨이퍼는 처음 보는 패턴 경고가 켜졌다. 원인 표에 없으니 사람이 확인해야 한다고 쓴다."
+
+
+def _prompt_rules(case: dict) -> str:
+    return UNKNOWN_RULE if case["unknown_flag"] else ""
 
 
 def check(case: dict, card: dict) -> list[str]:
@@ -68,17 +79,23 @@ def check(case: dict, card: dict) -> list[str]:
         problems.append(f"원인 표 밖의 cause_id: {bad} (허용: {sorted(ok_ids) or '없음'})")
     # 요약·점검 순서에 다른 패턴의 원인 이름이 끼어들었는지
     text = card.get("summary", "") + " " + " ".join(card.get("check_order", []))
+    allowed_text = " ".join(c["cause"] for c in allowed_causes(case["pattern"]))
     foreign = set()
     for pat, lst in CAUSES["patterns"].items():
         for c in lst:
             if c["cause_id"] not in ok_ids:
                 core = c["cause"].split("(")[0].replace(" 단계 이상", "").replace(" 이상", "").strip()
-                if core and core in text:
+                # 허용된 원인 이름 안에 들어 있는 낱말(예: '식각 균일도 저하' 속 '식각')은 다른 원인으로 치지 않는다
+                if core and core in text and core not in allowed_text:
                     foreign.add(core)
     if foreign:
         problems.append(f"허용되지 않은 원인이 문장에 나온다: {sorted(foreign)}")
     if case["unknown_flag"] and card.get("cause_ids"):
         problems.append("처음 보는 패턴인데 원인을 골랐다")
+    claims_unknown = any(("처음 보는" in s or "원인 표에 없" in s) and "아니" not in s
+                         for s in re.split(r"[.!?\n]|(?<=다)\s", text))
+    if not case["unknown_flag"] and claims_unknown:
+        problems.append("처음 보는 패턴 경고가 없는데 처음 보는 패턴이라고 썼다")
     if not (2 <= len(card.get("check_order", [])) <= 4):
         problems.append("check_order 는 2~4개")
     return problems

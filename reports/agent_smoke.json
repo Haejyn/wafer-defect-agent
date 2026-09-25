@@ -1,0 +1,749 @@
+{
+  "summary": {
+    "date": "2026-09-25",
+    "model": "qwen3.5:4b",
+    "n": 8,
+    "pass_first": 0.875,
+    "pass_final_after_1_retry": 0.875,
+    "known": {
+      "n": 8,
+      "pass_first": 0.875,
+      "pass_final": 0.875,
+      "classifier_correct": 0.875
+    },
+    "unseen": {
+      "n": 0,
+      "pass_first": null,
+      "pass_final": null,
+      "flagged_unknown": null
+    },
+    "problem_counts_first_try": {
+      "허용되지 않은 원인이 문장에 나온다": 1
+    },
+    "mean_seconds": 2.8
+  },
+  "results": [
+    {
+      "case": {
+        "row": 26677,
+        "true": "Center",
+        "classifier_pred": "Center",
+        "pattern": "Center",
+        "confidence": 0.9172657132148743,
+        "unknown_flag": false,
+        "ood_percentile": 21.325,
+        "location": "중심",
+        "location_features": {
+          "fail_ratio": 0.2548,
+          "n_clusters": 43,
+          "n_systematic_clusters": 18,
+          "systematic_share": 0.828,
+          "largest_px": 183,
+          "largest_r_median": 0.205,
+          "largest_r_min": 0.016,
+          "largest_sectors_of_12": 12,
+          "largest_elongation": 1.94,
+          "largest_thickness": 6.87,
+          "location": "중심"
+        },
+        "fail_ratio": 0.2548,
+        "similar": [
+          {
+            "pattern": "Center",
+            "similarity": 0.9979783296585083,
+            "row": 26676
+          },
+          {
+            "pattern": "Center",
+            "similarity": 0.9951514005661011,
+            "row": 27202
+          },
+          {
+            "pattern": "Center",
+            "similarity": 0.9947516918182373,
+            "row": 25707
+          },
+          {
+            "pattern": "Center",
+            "similarity": 0.9946839213371277,
+            "row": 27801
+          },
+          {
+            "pattern": "Center",
+            "similarity": 0.9945867657661438,
+            "row": 26897
+          }
+        ]
+      },
+      "attempts": [
+        {
+          "card": {
+            "pattern": "Center",
+            "location": "중심",
+            "cause_ids": [
+              "deposition",
+              "particle"
+            ],
+            "check_order": [
+              "웨이퍼 중심에 집중된 불량 패턴이 확인되었습니다.",
+              "박막 증착 공정이나 파티클 발생 가능성을 우선적으로 점검해 주세요.",
+              "과거 데이터와 유사한 패턴이 반복되어 원인을 재확인하는 것이 필요합니다."
+            ],
+            "summary": "중심 부위에 집중된 불량이 의심되는 후보 사례입니다. 처음 보는 패턴으로 기존 원인 목록에 명시되지 않았으므로, 직접 확인이 필요합니다."
+          },
+          "problems": []
+        }
+      ],
+      "final": {
+        "pattern": "Center",
+        "location": "중심",
+        "cause_ids": [
+          "deposition",
+          "particle"
+        ],
+        "check_order": [
+          "웨이퍼 중심에 집중된 불량 패턴이 확인되었습니다.",
+          "박막 증착 공정이나 파티클 발생 가능성을 우선적으로 점검해 주세요.",
+          "과거 데이터와 유사한 패턴이 반복되어 원인을 재확인하는 것이 필요합니다."
+        ],
+        "summary": "중심 부위에 집중된 불량이 의심되는 후보 사례입니다. 처음 보는 패턴으로 기존 원인 목록에 명시되지 않았으므로, 직접 확인이 필요합니다."
+      },
+      "pass_first": true,
+      "pass_final": true,
+      "seconds": 9.1,
+      "model": "qwen3.5:4b",
+      "set": "known"
+    },
+    {
+      "case": {
+        "row": 46865,
+        "true": "Donut",
+        "classifier_pred": "Donut",
+        "pattern": "Donut",
+        "confidence": 0.6728232502937317,
+        "unknown_flag": false,
+        "ood_percentile": 80.9,
+        "location": "국부",
+        "location_features": {
+          "fail_ratio": 0.2785,
+          "n_clusters": 51,
+          "n_systematic_clusters": 9,
+          "systematic_share": 0.782,
+          "largest_px": 562,
+          "largest_r_median": 0.355,
+          "largest_r_min": 0.021,
+          "largest_sectors_of_12": 12,
+          "largest_elongation": 1.21,
+          "largest_thickness": 15.55,
+          "location": "국부"
+        },
+        "fail_ratio": 0.2785,
+        "similar": [
+          {
+            "pattern": "Donut",
+            "similarity": 0.9870101809501648,
+            "row": 24132
+          },
+          {
+            "pattern": "Donut",
+            "similarity": 0.9842426776885986,
+            "row": 21479
+          },
+          {
+            "pattern": "Donut",
+            "similarity": 0.9842228293418884,
+            "row": 48206
+          },
+          {
+            "pattern": "Donut",
+            "similarity": 0.9831358790397644,
+            "row": 24461
+          },
+          {
+            "pattern": "Donut",
+            "similarity": 0.9791625142097473,
+            "row": 24129
+          }
+        ]
+      },
+      "attempts": [
+        {
+          "card": {
+            "pattern": "Donut",
+            "location": "국부",
+            "cause_ids": [
+              "etch_uniformity"
+            ],
+            "check_order": [
+              "식각 공정에서 균일도가 낮아 원반 모양의 불량이 발생했는지 확인하세요.",
+              "불량 위치가 국부적으로 집중되어 있는지 다시 한번 점검해 보세요.",
+              "과거에 유사한 Donut 패턴이 자주 나타났던 점을 고려하여 식각 조건을 재검토하세요."
+            ],
+            "summary": "식각 균일도 저하로 인한 Donut 불량이 국부적으로 발생했습니다. 처음 보는 패턴이므로 원인 표에 없으므로 반드시 확인해야 합니다."
+          },
+          "problems": [
+            "허용되지 않은 원인이 문장에 나온다: ['식각']"
+          ]
+        },
+        {
+          "card": {
+            "pattern": "Donut",
+            "location": "국부",
+            "cause_ids": [
+              "etch_uniformity"
+            ],
+            "check_order": [
+              "식각 공정에서 균일도가 낮아 원반 모양의 불량이 발생했는지 확인하세요.",
+              "불량 위치가 국부적으로 집중되어 있는지 다시 한번 점검해 보세요.",
+              "과거에 유사한 Donut 패턴이 자주 나타났던 점을 고려하여 식각 조건을 재검토하세요."
+            ],
+            "summary": "식각 균일도 저하로 인한 Donut 불량이 국부적으로 발생했습니다. 처음 보는 패턴이므로 원인 표에 없으므로 반드시 확인해야 합니다."
+          },
+          "problems": [
+            "허용되지 않은 원인이 문장에 나온다: ['식각']"
+          ]
+        }
+      ],
+      "final": {
+        "pattern": "Donut",
+        "location": "국부",
+        "cause_ids": [
+          "etch_uniformity"
+        ],
+        "check_order": [
+          "식각 공정에서 균일도가 낮아 원반 모양의 불량이 발생했는지 확인하세요.",
+          "불량 위치가 국부적으로 집중되어 있는지 다시 한번 점검해 보세요.",
+          "과거에 유사한 Donut 패턴이 자주 나타났던 점을 고려하여 식각 조건을 재검토하세요."
+        ],
+        "summary": "식각 균일도 저하로 인한 Donut 불량이 국부적으로 발생했습니다. 처음 보는 패턴이므로 원인 표에 없으므로 반드시 확인해야 합니다."
+      },
+      "pass_first": false,
+      "pass_final": false,
+      "seconds": 3.8,
+      "model": "qwen3.5:4b",
+      "set": "known"
+    },
+    {
+      "case": {
+        "row": 154777,
+        "true": "Edge-Loc",
+        "classifier_pred": "Edge-Ring",
+        "pattern": "처음 보는 패턴",
+        "confidence": 0.556377649307251,
+        "unknown_flag": true,
+        "ood_percentile": 98.625,
+        "location": "선",
+        "location_features": {
+          "fail_ratio": 0.1052,
+          "n_clusters": 18,
+          "n_systematic_clusters": 8,
+          "systematic_share": 0.799,
+          "largest_px": 84,
+          "largest_r_median": 0.912,
+          "largest_r_min": 0.747,
+          "largest_sectors_of_12": 3,
+          "largest_elongation": 4.32,
+          "largest_thickness": 2.57,
+          "location": "선"
+        },
+        "fail_ratio": 0.1052,
+        "similar": [
+          {
+            "pattern": "Edge-Loc",
+            "similarity": 0.9686322212219238,
+            "row": 168923
+          },
+          {
+            "pattern": "Edge-Ring",
+            "similarity": 0.9622318148612976,
+            "row": 169179
+          },
+          {
+            "pattern": "Edge-Ring",
+            "similarity": 0.9587401151657104,
+            "row": 169558
+          },
+          {
+            "pattern": "Edge-Loc",
+            "similarity": 0.9435257315635681,
+            "row": 169162
+          },
+          {
+            "pattern": "Edge-Ring",
+            "similarity": 0.9429121613502502,
+            "row": 123914
+          }
+        ]
+      },
+      "attempts": [
+        {
+          "card": {
+            "pattern": "처음 보는 패턴",
+            "location": "선",
+            "cause_ids": [],
+            "check_order": [
+              "불량 위치가 선 (Edge) 에 집중되어 있습니다.",
+              "과거 웨이퍼와 유사한 패턴이 Edge-Loc 와 Edge-Ring 입니다.",
+              "처음 보는 패턴으로 원인 표에 없으므로 확인이 필요합니다."
+            ],
+            "summary": "처음 보는 패턴으로 원인 표에 없으며, 불량 위치가 선에 집중되어 있습니다."
+          },
+          "problems": []
+        }
+      ],
+      "final": {
+        "pattern": "처음 보는 패턴",
+        "location": "선",
+        "cause_ids": [],
+        "check_order": [
+          "불량 위치가 선 (Edge) 에 집중되어 있습니다.",
+          "과거 웨이퍼와 유사한 패턴이 Edge-Loc 와 Edge-Ring 입니다.",
+          "처음 보는 패턴으로 원인 표에 없으므로 확인이 필요합니다."
+        ],
+        "summary": "처음 보는 패턴으로 원인 표에 없으며, 불량 위치가 선에 집중되어 있습니다."
+      },
+      "pass_first": true,
+      "pass_final": true,
+      "seconds": 1.6,
+      "model": "qwen3.5:4b",
+      "set": "known"
+    },
+    {
+      "case": {
+        "row": 12342,
+        "true": "Edge-Ring",
+        "classifier_pred": "Edge-Ring",
+        "pattern": "Edge-Ring",
+        "confidence": 0.8789941668510437,
+        "unknown_flag": false,
+        "ood_percentile": 4.6,
+        "location": "링",
+        "location_features": {
+          "fail_ratio": 0.1469,
+          "n_clusters": 115,
+          "n_systematic_clusters": 1,
+          "systematic_share": 0.66,
+          "largest_px": 311,
+          "largest_r_median": 0.954,
+          "largest_r_min": 0.859,
+          "largest_sectors_of_12": 12,
+          "largest_elongation": 1.07,
+          "largest_thickness": 3.39,
+          "location": "링"
+        },
+        "fail_ratio": 0.1469,
+        "similar": [
+          {
+            "pattern": "Edge-Ring",
+            "similarity": 0.9980840086936951,
+            "row": 11288
+          },
+          {
+            "pattern": "Edge-Ring",
+            "similarity": 0.9975915551185608,
+            "row": 11951
+          },
+          {
+            "pattern": "Edge-Ring",
+            "similarity": 0.9973242878913879,
+            "row": 7000
+          },
+          {
+            "pattern": "Edge-Ring",
+            "similarity": 0.9972161650657654,
+            "row": 19647
+          },
+          {
+            "pattern": "Edge-Ring",
+            "similarity": 0.9972032308578491,
+            "row": 11939
+          }
+        ]
+      },
+      "attempts": [
+        {
+          "card": {
+            "pattern": "Edge-Ring",
+            "location": "링",
+            "cause_ids": [
+              "etch"
+            ],
+            "check_order": [
+              "식각 단계에서 링형 불량이 발생했는지 확인하세요.",
+              "불량 다이 비율이 약 15%로 높지 않은지 확인하세요.",
+              "과거 웨이퍼와 동일한 패턴이 반복된 점을 고려하여 식각 공정 재검토를 요청하세요."
+            ],
+            "summary": "식각 단계가 원인 후보인 링형 불량이 확인되었습니다. 처음 보는 패턴이므로 추가 검증이 필요합니다."
+          },
+          "problems": []
+        }
+      ],
+      "final": {
+        "pattern": "Edge-Ring",
+        "location": "링",
+        "cause_ids": [
+          "etch"
+        ],
+        "check_order": [
+          "식각 단계에서 링형 불량이 발생했는지 확인하세요.",
+          "불량 다이 비율이 약 15%로 높지 않은지 확인하세요.",
+          "과거 웨이퍼와 동일한 패턴이 반복된 점을 고려하여 식각 공정 재검토를 요청하세요."
+        ],
+        "summary": "식각 단계가 원인 후보인 링형 불량이 확인되었습니다. 처음 보는 패턴이므로 추가 검증이 필요합니다."
+      },
+      "pass_first": true,
+      "pass_final": true,
+      "seconds": 1.7,
+      "model": "qwen3.5:4b",
+      "set": "known"
+    },
+    {
+      "case": {
+        "row": 82738,
+        "true": "Loc",
+        "classifier_pred": "Loc",
+        "pattern": "Loc",
+        "confidence": 0.8946124911308289,
+        "unknown_flag": false,
+        "ood_percentile": 64.2875,
+        "location": "가장자리",
+        "location_features": {
+          "fail_ratio": 0.0961,
+          "n_clusters": 61,
+          "n_systematic_clusters": 4,
+          "systematic_share": 0.36,
+          "largest_px": 66,
+          "largest_r_median": 0.746,
+          "largest_r_min": 0.535,
+          "largest_sectors_of_12": 2,
+          "largest_elongation": 1.57,
+          "largest_thickness": 4.02,
+          "location": "가장자리"
+        },
+        "fail_ratio": 0.0961,
+        "similar": [
+          {
+            "pattern": "Loc",
+            "similarity": 0.9923206567764282,
+            "row": 23299
+          },
+          {
+            "pattern": "Loc",
+            "similarity": 0.9903723001480103,
+            "row": 82491
+          },
+          {
+            "pattern": "Loc",
+            "similarity": 0.9893074035644531,
+            "row": 101112
+          },
+          {
+            "pattern": "Loc",
+            "similarity": 0.9887788891792297,
+            "row": 116896
+          },
+          {
+            "pattern": "Loc",
+            "similarity": 0.9886671900749207,
+            "row": 119428
+          }
+        ]
+      },
+      "attempts": [
+        {
+          "card": {
+            "pattern": "Loc",
+            "location": "가장자리",
+            "cause_ids": [
+              "particle"
+            ],
+            "check_order": [
+              "웨이퍼 가장자리에 분포된 불량 패턴이 확인되었습니다.",
+              "파티클 발생 가능성이 원인 후보로 제시됩니다.",
+              "처음 보는 패턴으로 인해 추가 인적 검토가 필요합니다."
+            ],
+            "summary": "웨이퍼 가장자리에서 Loc 패턴의 불량이 발견되었으며, 파티클 발생이 원인 후보입니다. 처음 보는 패턴이므로 최종 원인은 사람이 확인해야 합니다."
+          },
+          "problems": []
+        }
+      ],
+      "final": {
+        "pattern": "Loc",
+        "location": "가장자리",
+        "cause_ids": [
+          "particle"
+        ],
+        "check_order": [
+          "웨이퍼 가장자리에 분포된 불량 패턴이 확인되었습니다.",
+          "파티클 발생 가능성이 원인 후보로 제시됩니다.",
+          "처음 보는 패턴으로 인해 추가 인적 검토가 필요합니다."
+        ],
+        "summary": "웨이퍼 가장자리에서 Loc 패턴의 불량이 발견되었으며, 파티클 발생이 원인 후보입니다. 처음 보는 패턴이므로 최종 원인은 사람이 확인해야 합니다."
+      },
+      "pass_first": true,
+      "pass_final": true,
+      "seconds": 1.6,
+      "model": "qwen3.5:4b",
+      "set": "known"
+    },
+    {
+      "case": {
+        "row": 92828,
+        "true": "Near-full",
+        "classifier_pred": "Near-full",
+        "pattern": "Near-full",
+        "confidence": 0.9972608089447021,
+        "unknown_flag": false,
+        "ood_percentile": 3.6249999999999996,
+        "location": "전면",
+        "location_features": {
+          "fail_ratio": 0.8877,
+          "n_clusters": 1,
+          "n_systematic_clusters": 1,
+          "systematic_share": 1.0,
+          "location": "전면"
+        },
+        "fail_ratio": 0.8877,
+        "similar": [
+          {
+            "pattern": "Near-full",
+            "similarity": 0.9990645051002502,
+            "row": 92939
+          },
+          {
+            "pattern": "Near-full",
+            "similarity": 0.9986717700958252,
+            "row": 92900
+          },
+          {
+            "pattern": "Near-full",
+            "similarity": 0.9982705116271973,
+            "row": 93108
+          },
+          {
+            "pattern": "Near-full",
+            "similarity": 0.9971200227737427,
+            "row": 65414
+          },
+          {
+            "pattern": "Near-full",
+            "similarity": 0.9959436655044556,
+            "row": 99493
+          }
+        ]
+      },
+      "attempts": [
+        {
+          "card": {
+            "pattern": "Near-full",
+            "location": "전면",
+            "cause_ids": [
+              "early_process"
+            ],
+            "check_order": [
+              "초기 공정 단계가 불량 원인을 의심하게 합니다.",
+              "불량 위치가 전면으로 집중되어 있습니다.",
+              "처음 보는 패턴이므로 추가 확인이 필요합니다."
+            ],
+            "summary": "초기 공정 이상을 의심하는 Near-full 패턴 후보입니다. 처음 보는 패턴이므로 원인 표에 없으니 사람이 직접 확인해야 합니다."
+          },
+          "problems": []
+        }
+      ],
+      "final": {
+        "pattern": "Near-full",
+        "location": "전면",
+        "cause_ids": [
+          "early_process"
+        ],
+        "check_order": [
+          "초기 공정 단계가 불량 원인을 의심하게 합니다.",
+          "불량 위치가 전면으로 집중되어 있습니다.",
+          "처음 보는 패턴이므로 추가 확인이 필요합니다."
+        ],
+        "summary": "초기 공정 이상을 의심하는 Near-full 패턴 후보입니다. 처음 보는 패턴이므로 원인 표에 없으니 사람이 직접 확인해야 합니다."
+      },
+      "pass_first": true,
+      "pass_final": true,
+      "seconds": 1.5,
+      "model": "qwen3.5:4b",
+      "set": "known"
+    },
+    {
+      "case": {
+        "row": 8173,
+        "true": "Random",
+        "classifier_pred": "Random",
+        "pattern": "Random",
+        "confidence": 0.986782431602478,
+        "unknown_flag": false,
+        "ood_percentile": 53.55,
+        "location": "국부",
+        "location_features": {
+          "fail_ratio": 0.419,
+          "n_clusters": 15,
+          "n_systematic_clusters": 5,
+          "systematic_share": 0.951,
+          "largest_px": 1195,
+          "largest_r_median": 0.604,
+          "largest_r_min": 0.015,
+          "largest_sectors_of_12": 12,
+          "largest_elongation": 1.28,
+          "largest_thickness": 17.68,
+          "location": "국부"
+        },
+        "fail_ratio": 0.419,
+        "similar": [
+          {
+            "pattern": "Random",
+            "similarity": 0.9930418729782104,
+            "row": 74028
+          },
+          {
+            "pattern": "Random",
+            "similarity": 0.9926406145095825,
+            "row": 39121
+          },
+          {
+            "pattern": "Random",
+            "similarity": 0.9918590784072876,
+            "row": 106869
+          },
+          {
+            "pattern": "Random",
+            "similarity": 0.9912333488464355,
+            "row": 13448
+          },
+          {
+            "pattern": "Random",
+            "similarity": 0.99112468957901,
+            "row": 98153
+          }
+        ]
+      },
+      "attempts": [
+        {
+          "card": {
+            "pattern": "Random",
+            "location": "국부",
+            "cause_ids": [
+              "early_process"
+            ],
+            "check_order": [
+              "초기 공정 단계에서 발생한 이상으로 의심됩니다.",
+              "불량 다이 비율이 높으며 유사한 과거 패턴과 일치합니다.",
+              "처음 보는 패턴이므로 추가 확인이 필요합니다."
+            ],
+            "summary": "초기 공정 단계의 이상이 Random 패턴 불량으로 추정됩니다. 처음 보는 패턴이므로 최종 원인은 사람이 확인해야 합니다."
+          },
+          "problems": []
+        }
+      ],
+      "final": {
+        "pattern": "Random",
+        "location": "국부",
+        "cause_ids": [
+          "early_process"
+        ],
+        "check_order": [
+          "초기 공정 단계에서 발생한 이상으로 의심됩니다.",
+          "불량 다이 비율이 높으며 유사한 과거 패턴과 일치합니다.",
+          "처음 보는 패턴이므로 추가 확인이 필요합니다."
+        ],
+        "summary": "초기 공정 단계의 이상이 Random 패턴 불량으로 추정됩니다. 처음 보는 패턴이므로 최종 원인은 사람이 확인해야 합니다."
+      },
+      "pass_first": true,
+      "pass_final": true,
+      "seconds": 1.5,
+      "model": "qwen3.5:4b",
+      "set": "known"
+    },
+    {
+      "case": {
+        "row": 78380,
+        "true": "Scratch",
+        "classifier_pred": "Scratch",
+        "pattern": "Scratch",
+        "confidence": 0.8390520215034485,
+        "unknown_flag": false,
+        "ood_percentile": 82.7375,
+        "location": "선",
+        "location_features": {
+          "fail_ratio": 0.1793,
+          "n_clusters": 37,
+          "n_systematic_clusters": 14,
+          "systematic_share": 0.722,
+          "largest_px": 158,
+          "largest_r_median": 0.529,
+          "largest_r_min": 0.302,
+          "largest_sectors_of_12": 4,
+          "largest_elongation": 5.17,
+          "largest_thickness": 3.69,
+          "location": "선"
+        },
+        "fail_ratio": 0.1793,
+        "similar": [
+          {
+            "pattern": "Scratch",
+            "similarity": 0.9895764589309692,
+            "row": 31794
+          },
+          {
+            "pattern": "Scratch",
+            "similarity": 0.9878079295158386,
+            "row": 159921
+          },
+          {
+            "pattern": "Scratch",
+            "similarity": 0.9818841218948364,
+            "row": 29357
+          },
+          {
+            "pattern": "Scratch",
+            "similarity": 0.9763979911804199,
+            "row": 11221
+          },
+          {
+            "pattern": "Scratch",
+            "similarity": 0.9763368964195251,
+            "row": 30445
+          }
+        ]
+      },
+      "attempts": [
+        {
+          "card": {
+            "pattern": "Scratch",
+            "location": "선",
+            "cause_ids": [
+              "handling"
+            ],
+            "check_order": [
+              "웨이퍼 이송 (핸들링) 과정에서 발생한 긁힘이 원인일 수 있습니다.",
+              "위에서 확인해야 할 사항이 없습니다."
+            ],
+            "summary": "선상의 Scratch 패턴이 발견되었으며, 핸들링 문제가 원인 후보입니다. 처음 보는 패턴이 아니므로 추가 확인이 필요합니다."
+          },
+          "problems": []
+        }
+      ],
+      "final": {
+        "pattern": "Scratch",
+        "location": "선",
+        "cause_ids": [
+          "handling"
+        ],
+        "check_order": [
+          "웨이퍼 이송 (핸들링) 과정에서 발생한 긁힘이 원인일 수 있습니다.",
+          "위에서 확인해야 할 사항이 없습니다."
+        ],
+        "summary": "선상의 Scratch 패턴이 발견되었으며, 핸들링 문제가 원인 후보입니다. 처음 보는 패턴이 아니므로 추가 확인이 필요합니다."
+      },
+      "pass_first": true,
+      "pass_final": true,
+      "seconds": 1.5,
+      "model": "qwen3.5:4b",
+      "set": "known"
+    }
+  ]
+}

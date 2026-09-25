@@ -1,4 +1,4 @@
-"""4단계 — 81만 장 임베딩, 유사 사례 검색 정밀도@k, UMAP 지도, 라벨 없는 웨이퍼 중 '가장 낯선' 후보.
+"""4단계 — 81만 장 임베딩, 유사 사례 검색 정밀도@k, 라벨 없는 웨이퍼 중 '가장 낯선' 후보. (지도는 umap_map.py)
 GPU 는 임베딩에만 쓴다(학습이 끝난 뒤 실행)."""
 import json
 import sys
@@ -79,17 +79,6 @@ res["unlabeled_novelty"] = {"n_unlabeled": int(len(unl)), "top200_rows": unl[ord
                             "score_percentiles": {p: round(float(np.percentile(far, p)), 4) for p in (50, 90, 99, 99.9)}}
 np.save(ROOT / "runs/unlabeled_novelty.npy", np.stack([unl, far]).astype(np.float32))
 
-# UMAP — 표본: 라벨 불량 전부 + none 3만 + 라벨 없음 12만 + 낯선 후보 상위 2천
-import umap  # noqa: E402
-
-defect_rows = np.flatnonzero(y_all > 0)
-none_rows = rng.choice(np.flatnonzero(y_all == 0), 30000, replace=False)
-unl_rows = rng.choice(unl, 120000, replace=False)
-sample = np.unique(np.concatenate([defect_rows, none_rows, unl_rows, unl[order[:2000]]]))
-xy = umap.UMAP(n_neighbors=30, min_dist=0.1, metric="cosine", random_state=0, low_memory=True).fit_transform(np.asarray(E[sample], dtype=np.float32))
-nov_full = np.full(len(y_all), np.nan, dtype=np.float32)
-nov_full[unl] = far
-np.savez_compressed(ROOT / "runs/umap_sample.npz", rows=sample, xy=xy.astype(np.float32), y=y_all[sample], novelty=nov_full[sample])
-res["umap"] = {"points": int(len(sample)), "labeled_defect": int(len(defect_rows)), "none": 30000, "unlabeled": 120000, "novel_top": 2000}
 (ROOT / "reports/map_search.json").write_text(json.dumps(res, ensure_ascii=False, indent=2), encoding="utf-8")
 print(json.dumps({k: v for k, v in res.items() if k != "unlabeled_novelty"}, ensure_ascii=False, indent=2))
+# UMAP 지도는 scripts/umap_map.py (09-25 첫 시도: 17만 5천 점 + random_state 고정 → 병렬이 꺼져 90분 넘게 끝나지 않아 중단)
