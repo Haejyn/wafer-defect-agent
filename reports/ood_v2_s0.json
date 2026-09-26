@@ -1,0 +1,372 @@
+{
+  "date": "2026-09-26",
+  "seed": 0,
+  "rows": {
+    "Center": {
+      "n_pos": 708,
+      "n_neg_all": 24646,
+      "all": {
+        "msp": {
+          "auroc": 0.2242,
+          "recall_at_fpr5": 0.0791
+        },
+        "energy": {
+          "auroc": 0.1905,
+          "recall_at_fpr5": 0.0452
+        },
+        "knn_emb": {
+          "auroc": 0.8834,
+          "recall_at_fpr5": 0.25
+        },
+        "mahalanobis": {
+          "auroc": 0.9546,
+          "recall_at_fpr5": 0.7952
+        }
+      },
+      "n_neg_defect": 3233,
+      "defect": {
+        "msp": {
+          "auroc": 0.3171,
+          "recall_at_fpr5": 0.0254
+        },
+        "energy": {
+          "auroc": 0.3336,
+          "recall_at_fpr5": 0.0155
+        },
+        "knn_emb": {
+          "auroc": 0.776,
+          "recall_at_fpr5": 0.096
+        },
+        "mahalanobis": {
+          "auroc": 0.8178,
+          "recall_at_fpr5": 0.0932
+        }
+      }
+    },
+    "Donut": {
+      "n_pos": 78,
+      "n_neg_all": 25276,
+      "all": {
+        "msp": {
+          "auroc": 0.5953,
+          "recall_at_fpr5": 0.2436
+        },
+        "energy": {
+          "auroc": 0.3937,
+          "recall_at_fpr5": 0.0256
+        },
+        "knn_emb": {
+          "auroc": 0.8611,
+          "recall_at_fpr5": 0.3077
+        },
+        "mahalanobis": {
+          "auroc": 0.984,
+          "recall_at_fpr5": 0.9231
+        }
+      },
+      "n_neg_defect": 3863,
+      "defect": {
+        "msp": {
+          "auroc": 0.645,
+          "recall_at_fpr5": 0.1154
+        },
+        "energy": {
+          "auroc": 0.5762,
+          "recall_at_fpr5": 0.0
+        },
+        "knn_emb": {
+          "auroc": 0.8034,
+          "recall_at_fpr5": 0.2308
+        },
+        "mahalanobis": {
+          "auroc": 0.9244,
+          "recall_at_fpr5": 0.5256
+        }
+      }
+    },
+    "Edge-Loc": {
+      "n_pos": 777,
+      "n_neg_all": 24577,
+      "all": {
+        "msp": {
+          "auroc": 0.7678,
+          "recall_at_fpr5": 0.5148
+        },
+        "energy": {
+          "auroc": 0.81,
+          "recall_at_fpr5": 0.5894
+        },
+        "knn_emb": {
+          "auroc": 0.9358,
+          "recall_at_fpr5": 0.6255
+        },
+        "mahalanobis": {
+          "auroc": 0.9034,
+          "recall_at_fpr5": 0.4839
+        }
+      },
+      "n_neg_defect": 3164,
+      "defect": {
+        "msp": {
+          "auroc": 0.8253,
+          "recall_at_fpr5": 0.3578
+        },
+        "energy": {
+          "auroc": 0.8741,
+          "recall_at_fpr5": 0.5058
+        },
+        "knn_emb": {
+          "auroc": 0.9102,
+          "recall_at_fpr5": 0.5058
+        },
+        "mahalanobis": {
+          "auroc": 0.7484,
+          "recall_at_fpr5": 0.1596
+        }
+      }
+    },
+    "Edge-Ring": {
+      "n_pos": 1541,
+      "n_neg_all": 23813,
+      "all": {
+        "msp": {
+          "auroc": 0.1532,
+          "recall_at_fpr5": 0.0584
+        },
+        "energy": {
+          "auroc": 0.1267,
+          "recall_at_fpr5": 0.0383
+        },
+        "knn_emb": {
+          "auroc": 0.9726,
+          "recall_at_fpr5": 0.8702
+        },
+        "mahalanobis": {
+          "auroc": 0.9809,
+          "recall_at_fpr5": 0.8981
+        }
+      },
+      "n_neg_defect": 2400,
+      "defect": {
+        "msp": {
+          "auroc": 0.2805,
+          "recall_at_fpr5": 0.035
+        },
+        "energy": {
+          "auroc": 0.1875,
+          "recall_at_fpr5": 0.0234
+        },
+        "knn_emb": {
+          "auroc": 0.9364,
+          "recall_at_fpr5": 0.6937
+        },
+        "mahalanobis": {
+          "auroc": 0.8974,
+          "recall_at_fpr5": 0.6132
+        }
+      }
+    },
+    "Loc": {
+      "n_pos": 536,
+      "n_neg_all": 24818,
+      "all": {
+        "msp": {
+          "auroc": 0.7957,
+          "recall_at_fpr5": 0.4907
+        },
+        "energy": {
+          "auroc": 0.7994,
+          "recall_at_fpr5": 0.5019
+        },
+        "knn_emb": {
+          "auroc": 0.9344,
+          "recall_at_fpr5": 0.6418
+        },
+        "mahalanobis": {
+          "auroc": 0.9303,
+          "recall_at_fpr5": 0.6157
+        }
+      },
+      "n_neg_defect": 3405,
+      "defect": {
+        "msp": {
+          "auroc": 0.864,
+          "recall_at_fpr5": 0.4216
+        },
+        "energy": {
+          "auroc": 0.8662,
+          "recall_at_fpr5": 0.4123
+        },
+        "knn_emb": {
+          "auroc": 0.8988,
+          "recall_at_fpr5": 0.4888
+        },
+        "mahalanobis": {
+          "auroc": 0.7656,
+          "recall_at_fpr5": 0.0989
+        }
+      }
+    },
+    "Near-full": {
+      "n_pos": 23,
+      "n_neg_all": 25331,
+      "all": {
+        "msp": {
+          "auroc": 0.4146,
+          "recall_at_fpr5": 0.1739
+        },
+        "energy": {
+          "auroc": 0.0913,
+          "recall_at_fpr5": 0.0
+        },
+        "knn_emb": {
+          "auroc": 0.9749,
+          "recall_at_fpr5": 0.8696
+        },
+        "mahalanobis": {
+          "auroc": 0.9993,
+          "recall_at_fpr5": 1.0
+        }
+      },
+      "n_neg_defect": 3918,
+      "defect": {
+        "msp": {
+          "auroc": 0.4403,
+          "recall_at_fpr5": 0.0
+        },
+        "energy": {
+          "auroc": 0.1544,
+          "recall_at_fpr5": 0.0
+        },
+        "knn_emb": {
+          "auroc": 0.9175,
+          "recall_at_fpr5": 0.6522
+        },
+        "mahalanobis": {
+          "auroc": 0.996,
+          "recall_at_fpr5": 1.0
+        }
+      }
+    },
+    "Random": {
+      "n_pos": 110,
+      "n_neg_all": 25244,
+      "all": {
+        "msp": {
+          "auroc": 0.7603,
+          "recall_at_fpr5": 0.4273
+        },
+        "energy": {
+          "auroc": 0.6721,
+          "recall_at_fpr5": 0.4182
+        },
+        "knn_emb": {
+          "auroc": 0.96,
+          "recall_at_fpr5": 0.8364
+        },
+        "mahalanobis": {
+          "auroc": 0.9954,
+          "recall_at_fpr5": 1.0
+        }
+      },
+      "n_neg_defect": 3831,
+      "defect": {
+        "msp": {
+          "auroc": 0.8062,
+          "recall_at_fpr5": 0.3364
+        },
+        "energy": {
+          "auroc": 0.7837,
+          "recall_at_fpr5": 0.3909
+        },
+        "knn_emb": {
+          "auroc": 0.9487,
+          "recall_at_fpr5": 0.7636
+        },
+        "mahalanobis": {
+          "auroc": 0.9764,
+          "recall_at_fpr5": 0.8636
+        }
+      }
+    },
+    "Scratch": {
+      "n_pos": 168,
+      "n_neg_all": 25186,
+      "all": {
+        "msp": {
+          "auroc": 0.6804,
+          "recall_at_fpr5": 0.2976
+        },
+        "energy": {
+          "auroc": 0.7118,
+          "recall_at_fpr5": 0.2619
+        },
+        "knn_emb": {
+          "auroc": 0.8298,
+          "recall_at_fpr5": 0.2321
+        },
+        "mahalanobis": {
+          "auroc": 0.7939,
+          "recall_at_fpr5": 0.2381
+        }
+      },
+      "n_neg_defect": 3773,
+      "defect": {
+        "msp": {
+          "auroc": 0.7486,
+          "recall_at_fpr5": 0.1964
+        },
+        "energy": {
+          "auroc": 0.7924,
+          "recall_at_fpr5": 0.1548
+        },
+        "knn_emb": {
+          "auroc": 0.7536,
+          "recall_at_fpr5": 0.1012
+        },
+        "mahalanobis": {
+          "auroc": 0.5585,
+          "recall_at_fpr5": 0.0476
+        }
+      }
+    }
+  },
+  "summary": {
+    "all": {
+      "msp": {
+        "mean_auroc": 0.5489,
+        "mean_recall_at_fpr5": 0.2857
+      },
+      "energy": {
+        "mean_auroc": 0.4744,
+        "mean_recall_at_fpr5": 0.2351
+      },
+      "knn_emb": {
+        "mean_auroc": 0.919,
+        "mean_recall_at_fpr5": 0.5792
+      },
+      "mahalanobis": {
+        "mean_auroc": 0.9427,
+        "mean_recall_at_fpr5": 0.7443
+      }
+    },
+    "defect": {
+      "msp": {
+        "mean_auroc": 0.6159,
+        "mean_recall_at_fpr5": 0.186
+      },
+      "energy": {
+        "mean_auroc": 0.571,
+        "mean_recall_at_fpr5": 0.1878
+      },
+      "knn_emb": {
+        "mean_auroc": 0.8681,
+        "mean_recall_at_fpr5": 0.4415
+      },
+      "mahalanobis": {
+        "mean_auroc": 0.8356,
+        "mean_recall_at_fpr5": 0.4252
+      }
+    }
+  }
+}

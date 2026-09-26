@@ -1,0 +1,196 @@
+{
+  "date": "2026-09-26",
+  "args": {
+    "budget": 0.01,
+    "rounds": 5,
+    "epochs": 2,
+    "seed": 0,
+    "lr": 0.0005,
+    "dup": 5,
+    "strategies": "none,random,uncertainty,novelty,agent"
+  },
+  "chunks": [
+    {
+      "n": 23091,
+      "lots": [
+        40328,
+        42398
+      ],
+      "defect": 1664
+    },
+    {
+      "n": 23106,
+      "lots": [
+        42399,
+        43971
+      ],
+      "defect": 1022
+    },
+    {
+      "n": 23074,
+      "lots": [
+        43972,
+        45447
+      ],
+      "defect": 1908
+    },
+    {
+      "n": 23100,
+      "lots": [
+        45448,
+        46537
+      ],
+      "defect": 1841
+    },
+    {
+      "n": 23066,
+      "lots": [
+        46538,
+        47542
+      ],
+      "defect": 1358
+    }
+  ],
+  "runs": {
+    "none": {
+      "per_round": [
+        {
+          "macro_f1": 0.7089,
+          "defect_recall_mean": 0.7556
+        },
+        {
+          "macro_f1": 0.6849,
+          "defect_recall_mean": 0.6484
+        },
+        {
+          "macro_f1": 0.7308,
+          "defect_recall_mean": 0.7711
+        },
+        {
+          "macro_f1": 0.7331,
+          "defect_recall_mean": 0.7484
+        },
+        {
+          "macro_f1": 0.728,
+          "defect_recall_mean": 0.7253
+        }
+      ],
+      "labels_added": 0,
+      "added_defect_share": null,
+      "mean_macro_f1_rounds_2_on": 0.7192,
+      "minutes": 0.1
+    },
+    "random": {
+      "per_round": [
+        {
+          "macro_f1": 0.7089,
+          "defect_recall_mean": 0.7556
+        },
+        {
+          "macro_f1": 0.5856,
+          "defect_recall_mean": 0.5714
+        },
+        {
+          "macro_f1": 0.6771,
+          "defect_recall_mean": 0.7501
+        },
+        {
+          "macro_f1": 0.7327,
+          "defect_recall_mean": 0.7059
+        },
+        {
+          "macro_f1": 0.6736,
+          "defect_recall_mean": 0.7756
+        }
+      ],
+      "labels_added": 924,
+      "added_defect_share": 0.079,
+      "mean_macro_f1_rounds_2_on": 0.6673,
+      "minutes": 6.0
+    },
+    "uncertainty": {
+      "per_round": [
+        {
+          "macro_f1": 0.7089,
+          "defect_recall_mean": 0.7556
+        },
+        {
+          "macro_f1": 0.6236,
+          "defect_recall_mean": 0.7123
+        },
+        {
+          "macro_f1": 0.6947,
+          "defect_recall_mean": 0.7128
+        },
+        {
+          "macro_f1": 0.73,
+          "defect_recall_mean": 0.6801
+        },
+        {
+          "macro_f1": 0.6399,
+          "defect_recall_mean": 0.7484
+        }
+      ],
+      "labels_added": 924,
+      "added_defect_share": 0.472,
+      "mean_macro_f1_rounds_2_on": 0.6721,
+      "minutes": 6.1
+    },
+    "novelty": {
+      "per_round": [
+        {
+          "macro_f1": 0.7089,
+          "defect_recall_mean": 0.7556
+        },
+        {
+          "macro_f1": 0.6582,
+          "defect_recall_mean": 0.6685
+        },
+        {
+          "macro_f1": 0.743,
+          "defect_recall_mean": 0.7953
+        },
+        {
+          "macro_f1": 0.7114,
+          "defect_recall_mean": 0.6872
+        },
+        {
+          "macro_f1": 0.7331,
+          "defect_recall_mean": 0.7386
+        }
+      ],
+      "labels_added": 924,
+      "added_defect_share": 0.447,
+      "mean_macro_f1_rounds_2_on": 0.7114,
+      "minutes": 6.3
+    },
+    "agent": {
+      "per_round": [
+        {
+          "macro_f1": 0.7089,
+          "defect_recall_mean": 0.7556
+        },
+        {
+          "macro_f1": 0.6169,
+          "defect_recall_mean": 0.5959
+        },
+        {
+          "macro_f1": 0.7428,
+          "defect_recall_mean": 0.7426
+        },
+        {
+          "macro_f1": 0.7295,
+          "defect_recall_mean": 0.7279
+        },
+        {
+          "macro_f1": 0.7277,
+          "defect_recall_mean": 0.7066
+        }
+      ],
+      "labels_added": 924,
+      "added_defect_share": 0.509,
+      "mean_macro_f1_rounds_2_on": 0.7042,
+      "minutes": 6.3
+    }
+  }
+}
