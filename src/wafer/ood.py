@@ -43,6 +43,26 @@ def knn_distance(query: torch.Tensor, bank: torch.Tensor, k: int = 1, device="cu
     return torch.cat(out)
 
 
+@torch.no_grad()
+def mahalanobis_score(query: torch.Tensor, bank: torch.Tensor, bank_y: np.ndarray, device="cuda", shrink: float = 1e-3) -> np.ndarray:
+    """클래스별 평균 + 공유 공분산(가우시안 판별) 기준, 가장 가까운 클래스까지의 마할라노비스 거리 제곱 (Lee et al., 2018)."""
+    b = bank.to(device).float()
+    classes = np.unique(bank_y)
+    yb = torch.from_numpy(bank_y).to(device)
+    means = torch.stack([b[yb == c].mean(0) for c in classes])
+    centered = torch.cat([b[yb == c] - means[i] for i, c in enumerate(classes)])
+    cov = centered.T @ centered / len(centered)
+    cov += shrink * torch.eye(cov.shape[0], device=device) * cov.diagonal().mean()
+    prec = torch.linalg.inv(cov)
+    out = []
+    for i in range(0, len(query), 8192):
+        q = query[i:i + 8192].to(device).float()
+        d = q[:, None, :] - means[None]
+        m = torch.einsum("nkd,de,nke->nk", d, prec, d)
+        out.append(m.min(1).values.cpu())
+    return torch.cat(out).numpy()
+
+
 def patch_bank(maps: torch.Tensor, max_patches: int, seed: int = 0) -> torch.Tensor:
     """학습 웨이퍼의 패치(8×8 위치마다 C차원)를 무작위로 max_patches 개까지 모은다 (PatchCore 의 코어셋 대신 무작위 부분표본)."""
     n, c, h, w = maps.shape

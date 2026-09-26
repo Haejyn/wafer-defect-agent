@@ -40,6 +40,21 @@ def auroc(scores_pos, scores_neg):
     return float((ranks[:n1].sum() - n1 * (n1 + 1) / 2) / (n1 * n0))
 
 
+def lot_bootstrap_ci(stat, groups, n_boot=1000, seed=0, alpha=0.05):
+    """로트 단위 부트스트랩 신뢰구간. 같은 로트의 웨이퍼는 서로 닮아 웨이퍼 단위로 다시 뽑으면 구간이 좁게 나온다.
+    stat(idx) — 행 번호 배열을 받아 값을 돌려주는 함수. groups — 행마다 로트 이름. 반환 (점추정, 하한, 상한)."""
+    rng = np.random.default_rng(seed)
+    uniq, inv = np.unique(groups, return_inverse=True)
+    members = [np.flatnonzero(inv == g) for g in range(len(uniq))]
+    point = stat(np.arange(len(groups)))
+    vals = []
+    for _ in range(n_boot):
+        pick = rng.integers(0, len(uniq), len(uniq))
+        vals.append(stat(np.concatenate([members[g] for g in pick])))
+    lo, hi = np.quantile(vals, [alpha / 2, 1 - alpha / 2])
+    return float(point), float(lo), float(hi)
+
+
 def recall_at_fpr(scores_pos, scores_neg, fpr=0.05):
     """음성의 (1-fpr) 분위수를 문턱으로 삼았을 때 양성 재현율."""
     thr = np.quantile(scores_neg, 1 - fpr)

@@ -20,6 +20,8 @@ ap.add_argument("--split", default="lot", choices=["lot", "wafer", "official"])
 ap.add_argument("--exclude", default=None)
 ap.add_argument("--seed", type=int, default=0)
 ap.add_argument("--epochs", type=int, default=20)
+ap.add_argument("--arch", default="cnn", choices=["cnn", "resnet18"])
+ap.add_argument("--lr", type=float, default=2e-3)
 args = ap.parse_args()
 
 d = np.load(ROOT / "data/proc/labeled64.npz", allow_pickle=True)
@@ -33,8 +35,8 @@ if args.split == "official":
     split[(split == 0) & np.isin(lot, list(val_lots))] = 1
 
 ex = None if args.exclude is None else CLASS_TO_ID[args.exclude]
-tag = f"{args.split}_s{args.seed}" + (f"_ex-{args.exclude}" if ex is not None else "")
-cfg = Config(split=args.split, exclude=ex, seed=args.seed, epochs=args.epochs)
+tag = ("" if args.arch == "cnn" else f"{args.arch}_") + f"{args.split}_s{args.seed}" + (f"_ex-{args.exclude}" if ex is not None else "")
+cfg = Config(split=args.split, exclude=ex, seed=args.seed, epochs=args.epochs, arch=args.arch, lr=args.lr)
 t0 = time.time()
 lines = []
 def log(msg):

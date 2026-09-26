@@ -11,7 +11,7 @@ for args in "$@"; do
   fi
   name=$(echo "$args" | tr ' ' '_' | tr -d '-')
   echo "START $args"
-  PYTHONIOENCODING=utf-8 /c/Python314/python scripts/train_cls.py $args > "runs/logs/$name.log" 2>&1
+  PYTHONIOENCODING=utf-8 .venv/Scripts/python scripts/train_cls.py $args > "runs/logs/$name.log" 2>&1
   code=$?
   echo "DONE $args exit=$code $(grep -o '"test_macro_f1": [0-9.]*\|"val_macro_f1": [0-9.]*' "runs/logs/$name.log" | tr '\n' ' ')"
   [ $code -ne 0 ] && tail -5 "runs/logs/$name.log" && exit $code

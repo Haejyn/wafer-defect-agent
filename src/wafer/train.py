@@ -9,7 +9,7 @@ import torch
 import torch.nn.functional as F
 
 from .metrics import confusion, macro_f1, per_class_recall
-from .model import WaferCNN, one_hot
+from .model import build, one_hot
 from .prep import CLASSES
 
 
@@ -22,6 +22,7 @@ class Config:
     batch: int = 256
     none_per_epoch: int = 20000   # 에폭마다 none 에서 뽑는 수 (나머지 불량은 전부)
     lr: float = 2e-3
+    arch: str = "cnn"             # cnn · resnet18
 
 
 def augment(x: torch.Tensor) -> torch.Tensor:
@@ -67,7 +68,7 @@ def run(X: np.ndarray, y: np.ndarray, split: np.ndarray, cfg: Config, device="cu
     w = 1.0 / np.sqrt(np.maximum(sampled_counts, 1))
     w = torch.tensor(w / w.mean(), dtype=torch.float32, device=device)
 
-    model = WaferCNN(n_out).to(device)
+    model = build(cfg.arch, n_out).to(device)
     opt = torch.optim.AdamW(model.parameters(), lr=cfg.lr, weight_decay=1e-4)
     steps = cfg.epochs * ((min(cfg.none_per_epoch, len(tr_none)) + len(tr_def)) // cfg.batch + 1)
     sched = torch.optim.lr_scheduler.OneCycleLR(opt, max_lr=cfg.lr, total_steps=steps)

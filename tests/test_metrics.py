@@ -48,3 +48,26 @@ def test_recall_at_fpr_threshold_keeps_false_alarms_at_or_below_target():
     r, thr = recall_at_fpr(pos, neg, 0.05)
     assert (neg > thr).mean() <= 0.0501
     assert 0.5 < r < 0.9
+
+
+def test_mahalanobis_ranks_far_points_higher():
+    import torch
+    from wafer.ood import mahalanobis_score
+    rng = np.random.default_rng(0)
+    bank = np.r_[rng.normal(0, 1, (300, 4)), rng.normal(5, 1, (300, 4))].astype(np.float32)
+    by = np.r_[np.zeros(300, int), np.ones(300, int)]
+    q = np.array([[0, 0, 0, 0], [5, 5, 5, 5], [20, -20, 20, -20]], dtype=np.float32)
+    s = mahalanobis_score(torch.from_numpy(q), torch.from_numpy(bank), by, device="cpu")
+    assert s[2] > 10 * max(s[0], s[1])
+
+
+def test_lot_bootstrap_interval_contains_point_and_widens_with_lot_correlation():
+    from wafer.metrics import lot_bootstrap_ci
+    rng = np.random.default_rng(0)
+    lots = np.repeat(np.arange(40), 25)
+    lot_effect = rng.normal(0, 1, 40)[lots]  # 같은 로트는 같은 방향으로 치우친다
+    x = lot_effect + rng.normal(0, 0.1, len(lots))
+    p, lo, hi = lot_bootstrap_ci(lambda i: x[i].mean(), lots, n_boot=400)
+    p2, lo2, hi2 = lot_bootstrap_ci(lambda i: x[i].mean(), np.arange(len(lots)), n_boot=400)  # 웨이퍼 단위
+    assert lo <= p <= hi
+    assert (hi - lo) > 2 * (hi2 - lo2)
