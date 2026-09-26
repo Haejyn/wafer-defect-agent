@@ -35,11 +35,11 @@
 
   <div class="kpis">
     <div class="kpi"><b>0.853</b><span>아는 패턴 macro-F1 · 로트 분할 test</span></div>
-    <div class="kpi"><b>0.919 <span style="font-size:8pt">vs 0.549</span></b><span>처음 보는 패턴 AUROC · 임베딩 거리 vs 분류기 확신도</span></div>
-    <div class="kpi"><b>57%</b><span>오경보 5 %에서 처음 보는 패턴 재현율</span></div>
+    <div class="kpi"><b>0.943 <span style="font-size:8pt">vs 0.549</span></b><span>처음 보는 패턴 AUROC · 임베딩 거리(마할라노비스) vs 분류기 확신도</span></div>
+    <div class="kpi"><b>74%</b><span>오경보 5 %에서 처음 보는 패턴 재현율 (불량끼리만 비교해도 AUROC 0.87)</span></div>
     <div class="kpi"><b>0.963 → 0.743</b><span>같은 시기 검증 → 나중 로트 macro-F1</span></div>
     <div class="kpi"><b>64% <span style="font-size:8pt">vs 36%</span></b><span>히트맵이 결함을 짚은 비율 · Grad-CAM vs 무작위</span></div>
-    <div class="kpi"><b>0.856</b><span>유사 사례 정밀도@5 (원본 픽셀 0.459)</span></div>
+    <div class="kpi"><b>2,654장</b><span>맵 품질 검사로 거른 깨진 맵 (0.33 %) → 줄무늬·혼합 패턴 드러남</span></div>
     <div class="kpi"><b>8% → 94%</b><span>판독 카드 첫 답 검사 통과 · 프롬프트 v1 → v3</span></div>
     <div class="kpi"><b>1.7초</b><span>판독 한 장 · 로컬 qwen3.5:4b · RTX 3060 Ti</span></div>
   </div>
@@ -53,7 +53,7 @@
     <div>
       <h2>분류기는 모르는 패턴을 자신 있게 우겨 넣는다</h2>
       <img src="img/ood.png" alt="">
-      <div class="small muted">불량 8종을 하나씩 학습에서 빼고 그 패턴을 '처음 보는 것'으로 가려내기. Edge-Ring 을 뺀 모델은 Edge-Ring 의 91 %를 Edge-Loc 이라 답했다 → 경고는 확신도 대신 임베딩 거리로.</div>
+      <div class="small muted">불량 8종을 하나씩 학습에서 빼고 그 패턴을 '처음 보는 것'으로 가려내기. (a) 아는 패턴 전부와 (b) 아는 불량끼리. Edge-Ring 을 뺀 모델은 Edge-Ring 의 91 %를 Edge-Loc 이라 답했다 → 경고는 확신도 대신 임베딩 거리로.</div>
     </div>
     <div>
       <h2>검증하며 바꾼 것</h2>
@@ -62,12 +62,13 @@
         <li><b>시간 이동</b> — 같은 시기 검증 0.963 이 나중 로트에서 0.743. 같은 시기 점수를 믿지 않음</li>
         <li><b>히트맵 교체</b> — 패치 kNN(PatchCore 식)이 결함을 짚은 비율 26 %로 무작위(36 %)보다 못함 → Grad-CAM 64 %</li>
         <li><b>LLM 판독 3판</b> — v1: 4B 모델이 조건부 규칙을 늘 따라 해 95장에 '처음 보는 패턴' / v2: 근거 없는 곳에서 '양자역학적 불안정성'을 지어냄 → 점검 순서 고정 선택지 + 표 밖 공정 어휘 검사</li>
-        <li><b>가장 낯선 라벨 없는 웨이퍼 200장</b>은 새 패턴이 아니라 깨진 모양의 맵 — 맵 품질 검사가 앞에 필요</li>
+        <li><b>품질 검사 추가</b> — 가장 낯선 라벨 없는 웨이퍼 200장이 모두 깨진 맵 → 걸러 내자 9종에 없는 줄무늬·혼합 패턴이 올라옴</li>
+        <li><b>따라잡기 실패 기록</b> — 나중 로트에서 1 %씩 라벨 달아 추가 학습했더니 오히려 하락(0.719 → 0.667~0.711). 선택보다 추가 학습 절차가 모델을 흔든 것 → 대조군·부드러운 업데이트로 재실험 중</li>
       </ul>
       <h2>쓴 것</h2>
       <div class="chips">
-        <span class="chip">PyTorch CNN</span><span class="chip">임베딩 kNN</span><span class="chip">Grad-CAM</span><span class="chip">UMAP</span>
-        <span class="chip">Ollama qwen3.5:4b · JSON 스키마</span><span class="chip">코드 검사 + 재질문</span><span class="chip">pytest · hypothesis 32개</span><span class="chip">Claude Code</span>
+        <span class="chip">PyTorch CNN</span><span class="chip">임베딩 kNN · 마할라노비스</span><span class="chip">Grad-CAM</span><span class="chip">UMAP</span>
+        <span class="chip">Ollama qwen3.5:4b · JSON 스키마</span><span class="chip">코드 검사 + 재질문</span><span class="chip">pytest · hypothesis 34개</span><span class="chip">Claude Code</span>
       </div>
     </div>
   </div>

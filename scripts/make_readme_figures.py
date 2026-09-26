@@ -87,23 +87,46 @@ def split_fig():
 
 
 def ood_fig():
-    r = load("ood_leave_one_out.json")
+    r = load("ood_v2_s0.json")
     names = list(r["rows"])
     x = np.arange(len(names))
     fig, axes = plt.subplots(2, 1, figsize=(7.2, 4.4), sharex=True)
-    for ax, key, label, letter in [(axes[0], "auroc", "AUROC", "a"), (axes[1], "recall_at_fpr5", "재현율 (오경보 5 %)", "b")]:
-        for off, s, name, color, hatch in [(-0.27, "msp", "분류기 확신도", "white", "///"), (0, "energy", "에너지", "white", "..."),
-                                           (0.27, "knn_emb", "임베딩 kNN", BLUE, None)]:
-            ax.bar(x + off, [r["rows"][n][s][key] for n in names], 0.25, color=color, edgecolor=BLACK, lw=0.6, hatch=hatch, label=name)
-        if key == "auroc":
-            ax.axhline(0.5, color=GRAY, lw=0.8, ls="--")
+    specs = [(-0.3, "msp", "분류기 확신도", "white", "///"), (-0.1, "energy", "에너지", "white", "..."),
+             (0.1, "knn_emb", "임베딩 kNN", BLUE, None), (0.3, "mahalanobis", "마할라노비스", "#8fb3d9", None)]
+    for ax, neg, label, letter in [(axes[0], "all", "AUROC · 음성 = 아는 패턴 전부", "a"), (axes[1], "defect", "AUROC · 음성 = 아는 불량만", "b")]:
+        for off, s_, name, color, hatch in specs:
+            ax.bar(x + off, [r["rows"][n][neg][s_]["auroc"] for n in names], 0.19, color=color, edgecolor=BLACK, lw=0.6, hatch=hatch, label=name)
+        ax.axhline(0.5, color=GRAY, lw=0.8, ls="--")
         ax.set_ylim(0, 1)
-        ax.set_ylabel(label)
+        ax.set_ylabel(label, fontsize=8)
         panel(ax, letter)
-    axes[0].legend(ncol=3, loc="lower right", bbox_to_anchor=(1, 1.01), fontsize=7.5)
+    axes[0].legend(ncol=4, loc="lower right", bbox_to_anchor=(1, 1.01), fontsize=7.5)
     axes[1].set_xticks(x, names, fontsize=8)
     fig.tight_layout()
     fig.savefig(OUT / "ood.png")
+    plt.close(fig)
+
+
+def novel_fig():
+    g = load("map_quality_gate.json")
+    rows = g["after_gate_top24_rows"][:16]
+    X = np.load(ROOT / "data/proc/all64.npy", mmap_mode="r")
+    q = np.load(ROOT / "runs/unlabeled_novelty.npy")
+    unl, far = q[0].astype(int), q[1]
+    before = unl[np.argsort(-far)[:8]]
+    fig, axes = plt.subplots(3, 8, figsize=(7.2, 3.1))
+    for j, r in enumerate(before):
+        axes[0, j].imshow(X[r], cmap=WAFER, vmin=0, vmax=2, interpolation="nearest")
+    for k, r in enumerate(rows):
+        axes[1 + k // 8, k % 8].imshow(X[r], cmap=WAFER, vmin=0, vmax=2, interpolation="nearest")
+    for ax in axes.flat:
+        ax.set_xticks([]); ax.set_yticks([])
+    axes[0, 0].set_ylabel("검사 전", fontsize=8)
+    axes[1, 0].set_ylabel("검사 뒤", fontsize=8)
+    panel(axes[0, 0], "a")
+    panel(axes[1, 0], "b")
+    fig.tight_layout(h_pad=0.4, w_pad=0.2)
+    fig.savefig(OUT / "novel.png")
     plt.close(fig)
 
 
@@ -184,9 +207,7 @@ def umap_fig():
 
 if __name__ == "__main__":
     setup_style()
-    split_fig()
-    ood_fig()
-    agent_fig()
-    umap_fig()
-    heat_fig()
+    which = sys.argv[1:] or ["split", "ood", "agent", "umap", "novel", "heat"]  # heat 는 GPU 를 쓴다
+    for name in which:
+        globals()[f"{name}_fig"]()
     print("ok", sorted(p.name for p in OUT.glob("*.png")))
