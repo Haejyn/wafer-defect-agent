@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# 학습을 한 번에 하나씩. 시작 전에 다른 프로세스가 GPU 를 쓰고 있으면(메모리 1.5 GB 초과) 멈춘다.
+# 학습을 한 번에 하나씩. 시작 전에 다른 프로세스가 GPU 를 쓰고 있으면(메모리 1.5 GB 초과 · Ollama 모델) 빌 때까지 기다린다.
 # 사용: bash scripts/run_queue.sh "--split lot" "--split wafer" ...
 cd "$(dirname "$0")/.."
 mkdir -p runs/logs
 for args in "$@"; do
   used=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits | head -1)
-  if [ "$used" -gt 1500 ]; then
-    echo "STOP gpu busy ${used}MiB before: $args"
-    exit 3
+  if [ "$used" -gt 1500 ] || [ "$(ollama ps 2>/dev/null | tail -n +2 | grep -c .)" -gt 0 ]; then
+    echo "WAIT gpu busy ${used}MiB before: $args"
+    bash scripts/wait_gpu.sh
   fi
   name=$(echo "$args" | tr ' ' '_' | tr -d '-')
   echo "START $args"
