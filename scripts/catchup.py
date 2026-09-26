@@ -1,6 +1,7 @@
 """고도화 B — 나중 로트 따라잡기. 공식 분할의 시험 로트(나중)를 로트 번호순으로 R 묶음으로 흘려보낸다.
 묶음마다: 현재 모델로 먼저 잰다(prequential) → 그 묶음에서 라벨 예산만큼 골라 라벨을 달고 → 학습 자료에 더해 짧게 추가 학습 → 다음 묶음.
-고르는 방법: none(업데이트 없음) · random · uncertainty(1−최대 확률) · novelty(라벨 있는 자료와의 임베딩 kNN 거리) · agent(둘의 순위 평균)
+고르는 방법: none(업데이트 없음) · finetune_only(라벨 없이 추가 학습만 — 절차가 흔드는 몫) · random · uncertainty(1−최대 확률) · novelty(라벨 있는 자료와의 임베딩 kNN 거리) · agent(둘의 순위 평균)
+v1(09-26): lr 5e-4 · 전체 층 추가 학습이 모델을 흔들어 모든 방법이 업데이트 없음보다 나빴다 → v2 는 --lr 1e-4 · --train-last(b4·head 만) 로 부드럽게.
 사용: python scripts/catchup.py --budget 0.01 --rounds 5 --epochs 2 --seed 0"""
 import argparse
 import json
@@ -28,7 +29,9 @@ ap.add_argument("--epochs", type=int, default=2)
 ap.add_argument("--seed", type=int, default=0)
 ap.add_argument("--lr", type=float, default=5e-4)
 ap.add_argument("--dup", type=int, default=5, help="새로 라벨 단 웨이퍼를 에폭마다 몇 번 넣나")
-ap.add_argument("--strategies", default="none,random,uncertainty,novelty,agent")
+ap.add_argument("--strategies", default="none,finetune_only,random,uncertainty,novelty,agent")
+ap.add_argument("--train-last", action="store_true", help="마지막 블록(b4)과 head 만 학습")
+ap.add_argument("--tag", default="")
 args = ap.parse_args()
 device = "cuda"
 
@@ -58,7 +61,8 @@ def evaluate(model, idx):
 
 
 def finetune(model, labeled, added, rng):
-    opt = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=1e-4)
+    params = [p for n, p in model.named_parameters() if (not args.train_last) or n.startswith(("b4.", "head."))]
+    opt = torch.optim.AdamW(params, lr=args.lr, weight_decay=1e-4)
     none_pool, def_pool = labeled[y[labeled] == 0], labeled[y[labeled] != 0]
     counts = np.bincount(y[np.concatenate([def_pool, np.repeat(added, args.dup)])], minlength=9).astype(float)
     counts[0] = min(20000, len(none_pool))
@@ -66,6 +70,10 @@ def finetune(model, labeled, added, rng):
     w = torch.tensor(w / w.mean(), dtype=torch.float32, device=device)
     for _ in range(args.epochs):
         model.train()
+        if args.train_last:  # 얼린 층의 BatchNorm 통계도 움직이지 않게
+            for n, m in model.named_modules():
+                if isinstance(m, torch.nn.BatchNorm2d) and not n.startswith("b4"):
+                    m.eval()
         idx = np.concatenate([rng.choice(none_pool, min(20000, len(none_pool)), replace=False), def_pool, np.repeat(added, args.dup)])
         rng.shuffle(idx)
         for i in range(0, len(idx), 256):
@@ -109,7 +117,7 @@ for strategy in args.strategies.split(","):
         per_round.append(m)
         if strategy != "none" and r < len(chunks) - 1:
             k = max(1, int(round(args.budget * len(chunk))))
-            pick = select(strategy, model, chunk, lg, labeled, k, rng)
+            pick = np.array([], dtype=int) if strategy == "finetune_only" else select(strategy, model, chunk, lg, labeled, k, rng)
             added = np.concatenate([added, pick])
             labeled = np.concatenate([labeled, pick])
             finetune(model, labeled, added, rng)
@@ -122,6 +130,6 @@ for strategy in args.strategies.split(","):
     del model
     torch.cuda.empty_cache()
 
-out = ROOT / f"reports/catchup_b{args.budget}_s{args.seed}.json"
+out = ROOT / f"reports/catchup_b{args.budget}_s{args.seed}{args.tag}.json"
 out.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
 print("wrote", out)
