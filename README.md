@@ -22,6 +22,9 @@
 
 ## 판독 예시
 
+![판독 흐름](docs/media/agent.gif)
+<sub>그림. 판독 흐름 재생 · 사례 1 첫 답 통과 · 사례 2 첫 답이 코드 검사에 걸림 → 재질문 → 통과 · 기록된 출력 그대로 (모델 재실행 없음) · [MP4](docs/media/agent.mp4) · `scripts/make_agent_animation.py`</sub>
+
 ![판독 화면](docs/img/case_loc.png)
 ![처음 보는 패턴](docs/img/case_unseen.png)
 <sub>그림 1. 원본 · Grad-CAM · 판정(확신도 · 이상 점수 백분위 · 계산된 위치) · 유사 과거 웨이퍼 5장 · 판독 카드. 아래는 Donut 을 뺀 모델에 Donut 이 들어온 경우 — 경고, 원인 비움</sub>
