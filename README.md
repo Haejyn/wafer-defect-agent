@@ -47,6 +47,7 @@ flowchart LR
 - LLM: 옮겨 쓰기만 수행 → 코드 검사 → 위반 시 재질문
 - 전체 화면: [`reports/screen/index.html`](reports/screen/index.html) · 한 장 판독: `scripts/read_wafer.py`
 - 화면 디자인: `docs/ui/inspection.css` · 사례 선택: `docs/ui/inspection.js` · 화면 생성기와 영상 렌더러가 같은 정보 구조를 사용합니다.
+- BIW Weld Twin 디자인을 기준으로 차콜 패널·민트 선택 표시·상단 도구 막대·좌우 도크·하단 판정 영역을 구성했습니다. 원본/히트맵 보기 전환과 이전/다음 사례 탐색을 지원합니다.
 
 ![판독 화면](docs/img/case_loc.png)
 ![처음 보는 패턴](docs/img/case_unseen.png)

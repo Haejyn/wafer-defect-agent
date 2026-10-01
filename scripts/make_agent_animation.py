@@ -75,7 +75,7 @@ def screen_images(row: int) -> list[Image.Image]:
     """화면(index.html)에서 이 사례 줄의 그림 7장: 원본 · Grad-CAM · 유사 5장. 요약 문장으로 사례를 찾는다."""
     page = (ROOT / "reports/screen/index.html").read_text(encoding="utf-8")
     want = by_row[row]["final"]["summary"]
-    for sec in re.findall(r'<section class="case">(.*?)</section>', page, re.S):
+    for sec in re.findall(r'<section class="case"(?:\s[^>]*)?>(.*?)</section>', page, re.S):
         if html.unescape(re.search(r"<p>(.*?)</p>", sec, re.S).group(1)) == want:
             return [decode(u) for u in re.findall(r'<img src="(data:image/png;base64,[^"]+)"', sec)]
     raise SystemExit(f"화면에 row {row} 사례가 없다 — make_screen.py 를 먼저 돌린다")

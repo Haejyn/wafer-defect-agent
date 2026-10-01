@@ -1,39 +1,90 @@
 "use strict";
 const cases = [...document.querySelectorAll(".case")];
 const picker = document.querySelector(".case-picker");
+const workspace = document.querySelector(".workspace");
+const previous = document.querySelector("#previous-case");
+const next = document.querySelector("#next-case");
+let selected = 0;
+function setSection(section) {
+  workspace.dataset.section = section;
+  document.querySelectorAll("a[data-section]").forEach(link => {
+    if (link.dataset.section === section) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
+  });
+  if (section === "map" && window.Plotly) {
+    requestAnimationFrame(() => document.querySelectorAll(".plotly-graph-div").forEach(plot => window.Plotly.Plots.resize(plot)));
+  }
+}
+function selectCase(index) {
+  selected = Math.max(0, Math.min(cases.length - 1, index));
+  cases.forEach((panel, n) => {
+    panel.hidden = n !== selected;
+    picker.children[n].setAttribute("aria-pressed", String(n === selected));
+  });
+  const current = cases[selected];
+  const label = picker.children[selected].querySelector(".case-name").textContent;
+  document.querySelector("#case-label").textContent = `사례 ${String(selected+1).padStart(2,"0")} / ${String(cases.length).padStart(2,"0")} · ${label}`;
+  document.querySelector("#selection-status").textContent = `선택: ${label}`;
+  document.querySelector("#validation-status").textContent = current.querySelector(".card-head .ok, .card-head .bad")?.textContent || "기록된 판독 카드";
+  previous.disabled = selected === 0;
+  next.disabled = selected === cases.length - 1;
+  setSection("inspection");
+  workspace.scrollTop = 0;
+}
 if (picker && cases.length) {
   cases.forEach((item, index) => {
-    const maps = document.createElement("div");
-    maps.className = "maps";
-    [...item.querySelectorAll(":scope > figure")].forEach((figure, i) => {
+    [...item.querySelectorAll(".maps .big")].forEach((figure, i) => {
+      figure.classList.add(i ? "heat-figure" : "original-figure");
       const label = document.createElement("span");
       label.className = "map-label";
-      label.textContent = i ? "02 / GRAD-CAM" : "01 / WAFER MAP";
+      label.textContent = i ? "GRAD-CAM" : "WAFER MAP";
       figure.prepend(label);
-      const image = figure.querySelector("img");
-      image.alt = figure.querySelector("figcaption").textContent;
-      maps.append(figure);
     });
-    const legend = document.createElement("div");
-    legend.className = "legend";
-    legend.innerHTML = '<span><i></i>정상 다이</span><span><i class="fail"></i>불량 다이</span><span>히트맵: 모델이 주목한 영역</span>';
-    maps.append(legend);
-    item.prepend(maps);
-    item.querySelectorAll(".sims img").forEach(img => {img.alt = img.nextElementSibling.textContent;});
+    const unknown = !!item.querySelector(".pattern .warn");
     const button = document.createElement("button");
     button.type = "button";
     button.className = "case-button";
-    button.textContent = `${String(index + 1).padStart(2,"0")} · ${item.querySelector(".pattern").childNodes[0].textContent.trim()}`;
-    button.setAttribute("aria-controls", `case-${index}`);
-    item.id = `case-${index}`;
-    button.setAttribute("aria-pressed", String(index === 0));
-    item.hidden = index !== 0;
-    button.addEventListener("click", () => {
-      cases.forEach((panel, n) => {
-        panel.hidden = n !== index;
-        picker.children[n].setAttribute("aria-pressed", String(n === index));
-      });
+    const number = document.createElement("span");
+    number.className = "case-number";
+    number.textContent = String(index+1).padStart(2,"0");
+    const dot = document.createElement("i");
+    dot.className = "case-dot" + (unknown ? " unknown" : "");
+    const name = document.createElement("span");
+    name.className = "case-name";
+    name.textContent = item.querySelector(".pattern").childNodes[0].textContent.trim();
+    const badge = document.createElement("span");
+    badge.className = "case-badge";
+    badge.textContent = unknown ? "확인" : "분류";
+    button.append(number, dot, name, badge);
+    button.setAttribute("aria-controls", item.id);
+    button.addEventListener("click", () => selectCase(index));
+    button.addEventListener("keydown", event => {
+      if (event.key === "ArrowDown" || event.key === "ArrowRight") {
+        event.preventDefault(); selectCase(Math.min(index+1,cases.length-1)); picker.children[selected].focus();
+      } else if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
+        event.preventDefault(); selectCase(Math.max(index-1,0)); picker.children[selected].focus();
+      }
     });
     picker.append(button);
   });
+  selectCase(0);
+  previous.addEventListener("click", () => selectCase(selected-1));
+  next.addEventListener("click", () => selectCase(selected+1));
 }
+document.querySelectorAll("[data-map-view]").forEach(button => {
+  if (button.tagName !== "BUTTON") return;
+  button.addEventListener("click", () => {
+    setSection("inspection");
+    workspace.dataset.mapView = button.dataset.mapView;
+    document.querySelectorAll("button[data-map-view]").forEach(other => other.setAttribute("aria-pressed",String(other === button)));
+  });
+});
+function showSection() {
+  setSection(location.hash === "#map" ? "map" : "inspection");
+}
+document.querySelectorAll("a[data-section]").forEach(link => link.addEventListener("click", () => setSection(link.dataset.section)));
+document.querySelectorAll("[data-open]").forEach(link => link.addEventListener("click", () => {
+  document.getElementById(link.dataset.open).open = true;
+}));
+window.addEventListener("hashchange",showSection);
+showSection();
