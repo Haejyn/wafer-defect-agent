@@ -2,7 +2,7 @@
 모델(CNN · LLM)을 다시 돌리지 않는다. 기록된 출력만 재생한다.
   - 판정 · 위치 · 유사 사례 · 판독 카드(첫 답 · 재질문 뒤 답) · 검사 결과: reports/agent_eval.json
   - 사례 1 의 원본 · Grad-CAM · 유사 사례 그림: reports/screen/index.html 에 박힌 PNG 그대로
-  - 사례 2 의 웨이퍼 맵: data/proc/labeled64.npz (make_screen.py 와 같은 색 · 같은 크기로 그림만)
+  - 사례 2 의 웨이퍼 맵: docs/media/cases/14866 기록 이미지 (없으면 data/proc/labeled64.npz)
   - 원인 이름 · 인용: src/wafer/causes.json (카드의 cause_id 로 찾음)
   - 기록된 카드에 wafer.agent.check 를 다시 걸어 기록된 problems 와 같은지 확인한다 (코드 검사만, 모델 아님)
 사용: python scripts/make_agent_animation.py"""
@@ -32,7 +32,7 @@ from wafer.agent import CAUSES, check  # noqa: E402
 OUT = ROOT / "docs/media"
 FRAMES = ROOT / "build/anim_frames"
 FPS = 12
-W, H = 1280, 640
+W, H = 1440, 900
 
 # 사례 — 사례 1: 첫 답 통과 (화면에 Grad-CAM 이 기록된 Loc) · 사례 2: 첫 답이 검사에 걸리고 재질문 뒤 통과
 ROW_PASS, ROW_RETRY = 81489, 14866
@@ -46,7 +46,10 @@ FONT_DIR = ROOT / "build/fonts"
 
 
 def font(weight: str, size: int) -> ImageFont.FreeTypeFont:
-    return ImageFont.truetype(str(FONT_DIR / f"Pretendard-{weight}.ttf"), size)
+    path = FONT_DIR / f"Pretendard-{weight}.ttf"
+    if not path.exists():
+        path = Path("C:/Windows/Fonts/malgunbd.ttf" if weight != "Regular" else "C:/Windows/Fonts/malgun.ttf")
+    return ImageFont.truetype(str(path), int(size))
 
 
 F = {
@@ -146,6 +149,11 @@ class Case:
         imgs = screen_images(row) if not self.retry else None
         if imgs:  # 기록된 화면 그림 그대로
             self.orig, self.heat, self.sims = imgs[0], imgs[1], imgs[2:7]
+        elif (ROOT / f"docs/media/cases/{row}/original.png").exists():
+            cache = ROOT / f"docs/media/cases/{row}"
+            self.orig = Image.open(cache / "original.png").convert("RGBA")
+            self.heat = None
+            self.sims = [Image.open(cache / f"similar-{i}.png").convert("RGBA") for i in range(5)]
         else:
             X = np.load(ROOT / "data/proc/labeled64.npz", allow_pickle=True)["X"]
             self.orig, self.heat = wafer_img(X[row]), None
@@ -160,167 +168,8 @@ class Case:
 
     # 상태 s: dict — 각 요소의 진행(0~1)과 카드 글자 수 등
     def draw(self, s: dict) -> Image.Image:
-        im = Image.new("RGBA", (W, H), BG)
-        d = ImageDraw.Draw(im)
-        c = self.c
-        # 머리
-        d.text((32, 24), "웨이퍼 판독 에이전트 · 판독 흐름", font=F["title"], fill=INK)
-        d.text((32, 60), "기록된 출력 재생 — 모델 재실행 없음 · WM-811K 로트 시험 웨이퍼", font=F["sub"], fill=MUTED)
-        tag = f"사례 {self.idx} / {self.total} · {'첫 답이 검사에 걸림 → 재질문' if self.retry else '첫 답 통과'}"
-        tw = F["tag"].getlength(tag)
-        d.rounded_rectangle((W - 32 - tw - 24, 26, W - 32, 54), 14, fill=PANEL)
-        d.text((W - 32 - tw - 12, 32), tag, font=F["tag"], fill=INK)
-        # 단계 칩
-        x = 32
-        for i, name in enumerate(self.steps):
-            label = f"{i + 1}  {name}"
-            w = F["chip"].getlength(label) + 26
-            active, done = i == s["step"], i < s["step"]
-            fill = INK if active else PANEL
-            col = "#ffffff" if active else (INK if done else "#a3a8b1")
-            d.rounded_rectangle((x, 94, x + w, 122), 14, fill=fill)
-            d.text((x + 13, 100), label, font=F["chip"], fill=col)
-            x += w + 8
-        # 본판
-        d.rounded_rectangle((24, 138, W - 24, H - 20), 18, fill=PANEL)
-
-        # 맵
-        size = 200
-        paste(im, self.orig, (48, 162), size, s["map"])
-        if s["map"] > 0:
-            cap = f"원본 · 라벨 {c['true']}"
-            d.text((48 + size / 2 - F["cap"].getlength(cap) / 2, 368), cap, font=F["cap"], fill=MUTED)
-        vx = 280
-        if self.heat is not None:
-            paste(im, self.orig, (264, 162), size, s["map"] * (1 - s["heat"]))
-            paste(im, self.heat, (264, 162), size, s["heat"])
-            if s["heat"] > 0:
-                cap = "히트맵 (Grad-CAM)"
-                d.text((264 + size / 2 - F["cap"].getlength(cap) / 2, 368), cap, font=F["cap"], fill=mix(PANEL, MUTED, s["heat"]))
-            vx = 492
-
-        # 판정
-        rows = [("분류 확신도", f"{c['confidence']:.2f}"), ("이상 점수 백분위", f"{c['ood_percentile']:.0f}"),
-                ("계산된 위치", c["location"]), ("불량 다이", f"{c['fail_ratio'] * 100:.1f}%"),
-                ("처음 보는 패턴 경고", "켜짐" if c["unknown_flag"] else "꺼짐")]
-        vw = 250 if self.heat is not None else 300
-        p = s["verdict"]
-        if p > 0:
-            d.text((vx, 162), c["pattern"], font=F["pattern"], fill=mix(PANEL, INK, p * 3))
-            for i, (k, v) in enumerate(rows):
-                a = ease(p * len(rows) - i * 0.7)
-                if a <= 0:
-                    continue
-                y = 208 + i * 30
-                if i == 4 and s["flag_hl"] > 0:
-                    d.rounded_rectangle((vx - 8, y - 5, vx + vw + 8, y + 23), 8, fill=mix(PANEL, RED_TINT, s["flag_hl"]))
-                d.text((vx, y), k, font=F["kv"], fill=mix(PANEL, MUTED, a))
-                vcol = RED if (i == 4 and s["flag_hl"] > 0.5) else INK
-                d.text((vx + vw - F["kvb"].getlength(v), y), v, font=F["kvb"], fill=mix(PANEL, vcol, a))
-
-        # 유사 사례
-        if s["sims"] > 0:
-            d.text((48, 410), "유사 과거 웨이퍼 5장 · 임베딩 유사도", font=F["h4"], fill=mix(PANEL, MUTED, s["sims"] * 3))
-            for i, (img, sim) in enumerate(zip(self.sims, c["similar"])):
-                a = ease(s["sims"] * 2.2 - i * 0.28)
-                if a <= 0:
-                    continue
-                sx = 48 + i * 136 + (1 - a) * 60
-                paste(im, img, (sx, 436), 116, a)
-                cap = f"{sim['pattern']} · {sim['similarity']:.2f}"
-                d.text((sx + 58 - F["capS"].getlength(cap) / 2, 558), cap, font=F["capS"], fill=mix(PANEL, MUTED, a))
-
-        # 판독 카드
-        self.draw_card(im, d, s)
-        return im
-
-    def draw_card(self, im, d, s):
-        if s["card"] <= 0:
-            return
-        x0, y0, x1, y1 = 748, 158, W - 44, H - 40
-        d.rounded_rectangle((x0, y0, x1, y1), 14, fill=mix(PANEL, CARD, s["card"] * 2))
-        if s["card"] < 0.5:
-            return
-        tx, tw = x0 + 18, x1 - x0 - 36
-        card = self.last if s["answer"] == 2 else self.first
-        head = "판독 카드 · qwen3.5:4b"
-        d.text((tx, y0 + 16), head, font=F["head"], fill=INK)
-        sub = "재질문 뒤 답" if s["answer"] == 2 else "첫 답"
-        d.text((x1 - 18 - F["cap"].getlength(sub), y0 + 19), sub, font=F["cap"], fill=MUTED)
-        y = y0 + 48
-        budget = s["typed"]
-
-        def typed(text):
-            nonlocal budget
-            n = max(0, min(len(text), budget))
-            budget -= len(text)
-            return text[:n]
-
-        # 요약
-        t = typed(card["summary"])
-        for ln in wrap(t, F["body"], tw):
-            d.text((tx, y), ln, font=F["body"], fill=INK)
-            y += 21
-        y = y0 + 48 + 21 * len(wrap(card["summary"], F["body"], tw)) + 10
-        # 원인 후보 — 코드가 원인 표에서 찾아 붙임
-        if budget > 0 or s["typed"] >= 10 ** 6:
-            d.text((tx, y), "원인 후보 · 원인 표 인용", font=F["h4"], fill=MUTED)
-            y += 20
-            for cid in card["cause_ids"]:
-                ct = cause_text[cid]
-                d.text((tx, y), "• " + ct["cause"], font=F["bodyB"], fill=INK)
-                y += 21
-                for ln in wrap(f"“{ct['quote']}” [{ct['source']}]", F["quote"], tw - 14):
-                    d.text((tx + 14, y), ln, font=F["quote"], fill=MUTED)
-                    y += 17
-            y += 8
-            d.text((tx, y), "점검 순서", font=F["h4"], fill=MUTED)
-            y += 20
-            for i, step in enumerate(card["check_order"]):
-                t = typed(step)
-                if not t and budget < 0:
-                    break
-                lines = wrap(step, F["body"], tw - 22)
-                shown = wrap(t, F["body"], tw - 22)
-                is_drop = step in self.dropped and s["answer"] == 1
-                h = 21 * len(lines)
-                if is_drop and s["drop_hl"] > 0:
-                    d.rounded_rectangle((tx - 8, y - 3, x1 - 10, y + h + 1), 8, fill=mix(CARD, RED_TINT, s["drop_hl"]))
-                fill = INK
-                if is_drop and s["strike"] > 0:
-                    fill = mix(INK, "#b8bcc4", s["strike"])
-                d.text((tx, y), f"{i + 1}.", font=F["body"], fill=fill)
-                for j, ln in enumerate(shown):
-                    d.text((tx + 22, y + 21 * j), ln, font=F["body"], fill=fill)
-                    if is_drop and s["strike"] > 0:
-                        lw = F["body"].getlength(ln) * min(1.0, s["strike"] * 1.4)
-                        d.line((tx + 22, y + 21 * j + 10, tx + 22 + lw, y + 21 * j + 10), fill=RED, width=2)
-                y += h + 4
-
-        # 코드 검사 줄
-        st = s["check"]
-        if st:
-            by = y1 - 16 - (78 if st in ("fail", "reask") else 44)
-            if st == "running":
-                d.rounded_rectangle((tx - 6, by, x1 - 12, y1 - 16), 10, fill=PANEL)
-                dots = "·" * (1 + s["t"] // 3 % 3)
-                d.text((tx + 8, by + 12), f"코드 검사 중 {dots}", font=F["status"], fill=MUTED)
-            elif st == "pass":
-                d.rounded_rectangle((tx - 6, by, x1 - 12, y1 - 16), 10, fill=OK_TINT)
-                d.ellipse((tx + 8, by + 14, tx + 20, by + 26), fill=OK)
-                d.text((tx + 28, by + 11), "검사 통과", font=F["status"], fill=OK)
-                note = "첫 답 그대로" if not self.retry else "재질문 1회 뒤"
-                note += f" · {self.r['seconds']} 초"
-                d.text((x1 - 28 - F["cap"].getlength(note), by + 14), note, font=F["cap"], fill=OK)
-            else:  # fail · reask
-                prob = self.r["attempts"][0]["problems"][0]
-                d.rounded_rectangle((tx - 6, by, x1 - 12, y1 - 16), 10, fill=RED_TINT)
-                d.ellipse((tx + 8, by + 14, tx + 20, by + 26), fill=RED)
-                d.text((tx + 28, by + 11), "검사에 걸림", font=F["status"], fill=RED)
-                d.text((tx + 8, by + 42), f"“{prob}”", font=F["body"], fill=INK)
-                if st == "reask":
-                    note = "→ 재질문 1회"
-                    d.text((x1 - 28 - F["status"].getlength(note), by + 11), note, font=F["status"], fill=INK)
+        from inspection_animation import draw
+        return draw(self, s, cause_text)
 
 
 def timeline(case: Case) -> list[dict]:
@@ -388,38 +237,34 @@ def timeline(case: Case) -> list[dict]:
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
+    # Render one frame at a time: full-resolution frames need not fit in RAM.
     cases = [Case(ROW_PASS, 1, 2), Case(ROW_RETRY, 2, 2)]
-    imgs = []
-    for k, case in enumerate(cases):
-        seq = [case.draw(s).convert("RGB") for s in timeline(case)]
-        if k > 0:  # 앞 사례에서 이어지는 짧은 넘김
-            prev = imgs[-1]
-            for i in range(1, 5):
-                imgs.append(Image.blend(prev, seq[0], i / 5))
-        imgs += seq
-    # 반복될 때 첫 사례로 부드럽게
-    for i in range(1, 5):
-        imgs.append(Image.blend(imgs[-1], imgs[0], i / 5))
-
-    if FRAMES.exists():
-        shutil.rmtree(FRAMES)
-    FRAMES.mkdir(parents=True)
-    for i, im in enumerate(imgs):
-        im.save(FRAMES / f"{i:04d}.png")
-
+    FRAMES.mkdir(parents=True, exist_ok=True)
+    count = 0
     mp4 = OUT / "agent.mp4"
-    imageio.mimwrite(mp4, [np.asarray(im) for im in imgs], fps=FPS, codec="libx264", quality=8,
-                     pixelformat="yuv420p", macro_block_size=16, ffmpeg_params=["-movflags", "+faststart"])
+    with imageio.get_writer(mp4, fps=FPS, codec="libx264", quality=8,
+                           pixelformat="yuv420p", macro_block_size=2,
+                           ffmpeg_params=["-movflags", "+faststart"]) as writer:
+        for case in cases:
+            states = timeline(case)
+            for state in states:
+                im = case.draw(state).convert("RGB")
+                writer.append_data(np.asarray(im))
+                count += 1
+            if case.idx == 1:
+                im.save(OUT / "agent-poster.png")
+                im.save(ROOT / "docs/img/case_loc.png")
+            im.save(FRAMES / f"case-{case.idx}-final.png")
     ff = imageio_ffmpeg.get_ffmpeg_exe()
     gif = OUT / "agent.gif"
-    gw = int(sys.argv[1]) if len(sys.argv) > 1 else W
-    vf = (f"scale={gw}:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=128:stats_mode=diff[p];"
-          "[b][p]paletteuse=dither=bayer:bayer_scale=5:diff_mode=rectangle")
-    subprocess.run([ff, "-y", "-loglevel", "error", "-framerate", str(FPS), "-i", str(FRAMES / "%04d.png"),
-                    "-vf", vf, "-loop", "0", str(gif)], check=True)
-    print(f"frames {len(imgs)} · {len(imgs) / FPS:.1f} s @ {FPS} fps")
-    for p in (gif, mp4):
-        print(p.relative_to(ROOT), f"{p.stat().st_size / 1e6:.2f} MB")
+    gw = int(sys.argv[1]) if len(sys.argv) > 1 else 960
+    vf = (f"fps=8,scale={gw}:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=128[p];"
+          "[b][p]paletteuse=dither=bayer:bayer_scale=5")
+    subprocess.run([ff, "-y", "-loglevel", "error", "-i", str(mp4),
+                    "-filter_complex", vf, "-loop", "0", str(gif)], check=True)
+    print(f"frames {count} · {count / FPS:.1f} s @ {FPS} fps")
+    for output in (gif, mp4):
+        print(output.relative_to(ROOT), f"{output.stat().st_size / 1e6:.2f} MB")
 
 
 if __name__ == "__main__":

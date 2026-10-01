@@ -166,5 +166,6 @@ footer{{padding:20px 32px 40px;color:var(--muted);font-size:12px}}
 <h2>81만 장 지도 (UMAP 표본 {len(xy):,}점)</h2><div class="map">{map_html}</div>
 <footer>데이터: WM-811K (MIR Lab). [1] M.-J. Wu, J.-S. R. Jang, J.-L. Chen, IEEE TSM 28(1), 2015. [2] MIR-WM811K, http://mirlab.org/dataset/public/ · 원인 후보 출처: {html.escape(CAUSES["sources"]["S1"])} / {html.escape(CAUSES["sources"]["S2"])}</footer>
 </body></html>"""
-(OUT / "index.html").write_text(page, encoding="utf-8")
+from inspection_ui import restyle
+(OUT / "index.html").write_text(restyle(page), encoding="utf-8")
 print("wrote", OUT / "index.html", "cases", len(chosen))

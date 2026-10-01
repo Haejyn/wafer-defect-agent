@@ -11,6 +11,8 @@ Haejyn · 기술 보고서 · 2026
 ![판독 흐름](docs/media/agent.gif)
 <sub>그림 0. 판독 흐름 재생. 사례 1은 첫 답 통과, 사례 2는 첫 답이 코드 검사에 걸려 재질문 후 통과. 기록된 출력 그대로이며 모델을 다시 실행하지 않음 ([MP4](docs/media/agent.mp4), `scripts/make_agent_animation.py`)</sub>
 
+[새 판독 화면 열기](https://haejyn.github.io/demos/wafer/) — 사례를 선택해 원본 맵·Grad-CAM·판정 지표·검증된 판독 카드를 확인할 수 있습니다. 기록된 결과를 탐색하는 데모입니다.
+
 ## Abstract
 
 WM-811K 실제 팹 웨이퍼 맵 811,457장(라벨 172,950장, 9종)을 대상으로 불량 패턴 판독 체계를 구성하였다. 판정 · 위치 · 유사 사례는 코드가 계산하고, 원인 후보는 논문 원문을 인용한 표 안에서만 고르며, 로컬 LLM(qwen3.5:4b)은 이를 판독 카드로 옮겨 쓰는 역할만 맡는다. LLM 출력은 코드 검사를 거치고, 위반 시 재질문한다. 로트 단위 분할에서 CNN 분류 macro-F1 0.853, 학습에서 제외한 패턴의 검출 AUROC 0.943(마할라노비스)을 얻었으며, 분류기 확신도(MSP)는 0.549로 우연 수준임을 확인하였다. 판독 카드는 첫 답 기준 94 %가 코드 검사를 통과한다. 틀렸던 가설과 실패한 실험 6건도 함께 기록한다.
@@ -44,6 +46,7 @@ flowchart LR
 - 원인 후보: 논문 원문 인용 표(`src/wafer/causes.json`) 안에서만 선택
 - LLM: 옮겨 쓰기만 수행 → 코드 검사 → 위반 시 재질문
 - 전체 화면: [`reports/screen/index.html`](reports/screen/index.html) · 한 장 판독: `scripts/read_wafer.py`
+- 화면 디자인: `docs/ui/inspection.css` · 사례 선택: `docs/ui/inspection.js` · 화면 생성기와 영상 렌더러가 같은 정보 구조를 사용합니다.
 
 ![판독 화면](docs/img/case_loc.png)
 ![처음 보는 패턴](docs/img/case_unseen.png)
