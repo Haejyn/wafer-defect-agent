@@ -1,0 +1,1 @@
+Recorded row 14866 (Random) images cropped from the original demo frame 0359, rendered by make_agent_animation.py. No model rerun or synthetic wafer map. The cache makes the demo reproducible without downloading WM-811K.
