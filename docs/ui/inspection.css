@@ -156,7 +156,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible {
 .tb-sep {
   width:1px;
   height:19px;
-  background:#3a3c41;
+  background:var(--line);
   margin:0 5px;
   flex:none
 }
@@ -201,7 +201,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible {
   justify-content:space-between;
   height:28px;
   padding:0 10px;
-  background:#26272a;
+  background:var(--field);
   color:var(--muted);
   font-size:10px;
   font-weight:600;
@@ -226,7 +226,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible {
   min-height:30px
 }
 .case-button:hover {
-  background:#2c2d31
+  background:var(--field)
 }
 .case-button[aria-pressed=true] {
   background:var(--accent-soft);
@@ -500,7 +500,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible {
   margin:0 -14px;
   padding:8px 12px;
   border-bottom:1px solid var(--line);
-  background:#26272a;
+  background:var(--field);
   font-size:11px;
   font-weight:600;
   color:var(--text-hi)
@@ -867,3 +867,14 @@ button:focus-visible,a:focus-visible,summary:focus-visible {
     font-size:8px
   }
 }
+
+:root[data-theme="light"] {
+  --app:#f6f7f9; --panel:#ffffff; --field:#e9edf2; --field-hi:#dfe5ed;
+  --line:#d4dae3; --text:#303846; --text-hi:#141b25; --muted:#566476;
+  --dim:#697788; --accent:#08786f; --accent-soft:rgba(8,120,111,.10);
+  --bad:#b72e24; --warn:#965300;
+}
+#theme-toggle {flex:none; padding:4px 9px; border:1px solid var(--line); border-radius:4px; background:var(--field); color:var(--text-hi); white-space:nowrap}
+:root[data-theme="light"] .rail-head,:root[data-theme="light"] .card-head {background:var(--field)}
+:root[data-theme="light"] .maps {background-color:#eef1f5; background-image:linear-gradient(#d5dce566 1px,transparent 1px),linear-gradient(90deg,#d5dce566 1px,transparent 1px)}
+:root[data-theme="light"] .statusbar {background:var(--panel)}
