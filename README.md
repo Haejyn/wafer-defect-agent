@@ -12,9 +12,9 @@ WM-811K 웨이퍼 맵에서 불량 패턴을 분류하고, 학습에 없던 패�
 
 ## 데모와 핵심 결과
 
-**[판독 화면 열기 ↗](https://haejyn.github.io/demos/wafer/)** · [판독 영상 MP4](https://haejyn.github.io/media/wafer-demo.mp4) · [평가 원자료](reports/agent_eval.json)
+**[판독 화면 열기 ↗](https://haejyn.github.io/demos/wafer/)** · [평가 원자료](reports/agent_eval.json)
 
-![웨이퍼 원본과 Grad-CAM, 유사 사례 및 판독 카드를 보여주는 판독 화면](https://haejyn.github.io/media/wafer-poster.png)
+![웨이퍼 원본과 Grad-CAM, 유사 사례 및 판독 카드를 보여주는 판독 화면](docs/img/inspection-light.jpg)
 
 공개 데모는 **기록된 판독 결과 8건을 탐색하는 화면**입니다. 새 웨이퍼 업로드나 실시간 모델 추론은 제공하지 않습니다.
 
@@ -24,7 +24,7 @@ WM-811K 웨이퍼 맵에서 불량 패턴을 분류하고, 학습에 없던 패�
 - 오른쪽 판독 카드에서 원인 후보, 점검 순서, 코드 검사 결과를 확인합니다.
 - 분포 지도와 평가 지표, 데이터·원인 후보의 출처를 열 수 있습니다.
 
-영상은 첫 답이 검사에 통과한 사례와, 첫 답의 오류를 재질문으로 수정한 사례를 보여줍니다. 기록된 출력을 재생하며 모델을 다시 실행하지 않습니다.
+README에는 라이트 모드 화면을 사용했습니다. 공개 데모에서 각 사례의 코드 검사 결과와 판독 카드를 확인할 수 있습니다.
 
 | 항목 | 결과 | 평가 조건 |
 |---|---|---|
@@ -81,8 +81,8 @@ flowchart LR
 - LLM: 옮겨 쓰기만 수행 → 코드 검사 → 위반 시 재질문
 - 전체 화면: [`reports/screen/index.html`](reports/screen/index.html) · 한 장 판독: `scripts/read_wafer.py`
 
-![판독 화면](docs/img/case_loc.png)
-![처음 보는 패턴](docs/img/case_unseen.png)
+![라이트 모드 판독 화면](docs/img/inspection-light.jpg)
+![라이트 모드에서 처음 보는 패턴 경고](docs/img/inspection-unseen-light.jpg)
 <sub>그림 1. 원본 · Grad-CAM · 판정(확신도 · 이상 점수 백분위 · 계산된 위치) · 유사 과거 웨이퍼 5장 · 판독 카드. 아래는 Donut 을 제외하고 학습한 모델에 Donut 이 입력된 경우로, 경고가 켜지고 원인은 비워진다.</sub>
 
 ## Experiments
