@@ -1,0 +1,1882 @@
+{
+  "low_conf": 0.7,
+  "rule": "경고 켜짐 또는 quality_ok=false 또는 1위 확률 < low_conf 이면 에이전트, 아니면 파이프라인 판정(look 1위 패턴)",
+  "a_known": {
+    "summary": {
+      "n": 96,
+      "to_agent": 17,
+      "share_to_agent": 0.1771,
+      "mean_seconds": 8.196,
+      "routes": {
+        "판정": 79,
+        "새 패턴 후보": 7,
+        "사람 확인": 10
+      },
+      "correct_verdict": 78,
+      "wrong_verdict": 1
+    },
+    "rows": [
+      {
+        "row": 589340,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Center",
+        "seconds": 1.3,
+        "true": "Center",
+        "end": "pipeline"
+      },
+      {
+        "row": 591634,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Center",
+        "seconds": 1.4,
+        "true": "Center",
+        "end": "pipeline"
+      },
+      {
+        "row": 525126,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Center",
+        "seconds": 1.7,
+        "true": "Center",
+        "end": "pipeline"
+      },
+      {
+        "row": 574671,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Center",
+        "seconds": 1.3,
+        "true": "Center",
+        "end": "pipeline"
+      },
+      {
+        "row": 628276,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Center",
+        "seconds": 1.4,
+        "true": "Center",
+        "end": "pipeline"
+      },
+      {
+        "row": 365663,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.696 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 25.81,
+        "true": "Center",
+        "end": "submitted"
+      },
+      {
+        "row": 772675,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Center",
+        "seconds": 1.7,
+        "true": "Center",
+        "end": "pipeline"
+      },
+      {
+        "row": 366299,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Center",
+        "seconds": 1.3,
+        "true": "Center",
+        "end": "pipeline"
+      },
+      {
+        "row": 722931,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Center",
+        "seconds": 1.8,
+        "true": "Center",
+        "end": "pipeline"
+      },
+      {
+        "row": 764525,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Center",
+        "seconds": 1.4,
+        "true": "Center",
+        "end": "pipeline"
+      },
+      {
+        "row": 627927,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Center",
+        "seconds": 1.5,
+        "true": "Center",
+        "end": "pipeline"
+      },
+      {
+        "row": 589608,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Center",
+        "seconds": 1.5,
+        "true": "Center",
+        "end": "pipeline"
+      },
+      {
+        "row": 679658,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Donut",
+        "seconds": 1.4,
+        "true": "Donut",
+        "end": "pipeline"
+      },
+      {
+        "row": 7907,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Donut",
+        "seconds": 1.3,
+        "true": "Donut",
+        "end": "pipeline"
+      },
+      {
+        "row": 683877,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Donut",
+        "seconds": 2.0,
+        "true": "Donut",
+        "end": "pipeline"
+      },
+      {
+        "row": 681420,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Donut",
+        "seconds": 1.7,
+        "true": "Donut",
+        "end": "pipeline"
+      },
+      {
+        "row": 393807,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Donut",
+        "seconds": 1.8,
+        "true": "Donut",
+        "end": "pipeline"
+      },
+      {
+        "row": 763569,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Donut",
+        "seconds": 1.5,
+        "true": "Donut",
+        "end": "pipeline"
+      },
+      {
+        "row": 386923,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Donut",
+        "seconds": 1.7,
+        "true": "Donut",
+        "end": "pipeline"
+      },
+      {
+        "row": 680166,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Donut",
+        "seconds": 1.4,
+        "true": "Donut",
+        "end": "pipeline"
+      },
+      {
+        "row": 279039,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Donut",
+        "seconds": 1.6,
+        "true": "Donut",
+        "end": "pipeline"
+      },
+      {
+        "row": 279056,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Donut",
+        "seconds": 1.5,
+        "true": "Donut",
+        "end": "pipeline"
+      },
+      {
+        "row": 279846,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Donut",
+        "seconds": 1.7,
+        "true": "Donut",
+        "end": "pipeline"
+      },
+      {
+        "row": 279048,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Donut",
+        "seconds": 1.5,
+        "true": "Donut",
+        "end": "pipeline"
+      },
+      {
+        "row": 758511,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Edge-Loc",
+        "seconds": 1.7,
+        "true": "Edge-Loc",
+        "end": "pipeline"
+      },
+      {
+        "row": 737835,
+        "to_agent": true,
+        "why": [
+          "1위 확률 0.607 < 0.7"
+        ],
+        "route": "사람 확인",
+        "pattern": "처음 보는 패턴",
+        "seconds": 96.23,
+        "true": "Edge-Loc",
+        "end": "submit_failed"
+      },
+      {
+        "row": 681304,
+        "to_agent": true,
+        "why": [
+          "1위 확률 0.431 < 0.7"
+        ],
+        "route": "사람 확인",
+        "pattern": "none",
+        "seconds": 72.72,
+        "true": "Edge-Loc",
+        "end": "submitted"
+      },
+      {
+        "row": 356980,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Edge-Loc",
+        "seconds": 1.5,
+        "true": "Edge-Loc",
+        "end": "pipeline"
+      },
+      {
+        "row": 773732,
+        "to_agent": true,
+        "why": [
+          "1위 확률 0.329 < 0.7"
+        ],
+        "route": "사람 확인",
+        "pattern": "처음 보는 패턴",
+        "seconds": 10.95,
+        "true": "Edge-Loc",
+        "end": "submitted"
+      },
+      {
+        "row": 361616,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Edge-Loc",
+        "seconds": 1.3,
+        "true": "Edge-Loc",
+        "end": "pipeline"
+      },
+      {
+        "row": 768614,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Edge-Loc",
+        "seconds": 1.5,
+        "true": "Edge-Loc",
+        "end": "pipeline"
+      },
+      {
+        "row": 757649,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Edge-Loc",
+        "seconds": 1.7,
+        "true": "Edge-Loc",
+        "end": "pipeline"
+      },
+      {
+        "row": 757849,
+        "to_agent": true,
+        "why": [
+          "1위 확률 0.568 < 0.7"
+        ],
+        "route": "사람 확인",
+        "pattern": "처음 보는 패턴",
+        "seconds": 20.24,
+        "true": "Edge-Loc",
+        "end": "no_tool_call"
+      },
+      {
+        "row": 639641,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 6.51,
+        "true": "Edge-Loc",
+        "end": "submitted"
+      },
+      {
+        "row": 394794,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Edge-Loc",
+        "seconds": 1.2,
+        "true": "Edge-Loc",
+        "end": "pipeline"
+      },
+      {
+        "row": 54538,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Edge-Loc",
+        "seconds": 1.2,
+        "true": "Edge-Loc",
+        "end": "pipeline"
+      },
+      {
+        "row": 346856,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Edge-Ring",
+        "seconds": 1.4,
+        "true": "Edge-Ring",
+        "end": "pipeline"
+      },
+      {
+        "row": 199813,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Edge-Ring",
+        "seconds": 1.5,
+        "true": "Edge-Ring",
+        "end": "pipeline"
+      },
+      {
+        "row": 728459,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Edge-Ring",
+        "seconds": 1.6,
+        "true": "Edge-Ring",
+        "end": "pipeline"
+      },
+      {
+        "row": 141336,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Edge-Ring",
+        "seconds": 1.6,
+        "true": "Edge-Ring",
+        "end": "pipeline"
+      },
+      {
+        "row": 221334,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Edge-Ring",
+        "seconds": 1.6,
+        "true": "Edge-Ring",
+        "end": "pipeline"
+      },
+      {
+        "row": 329434,
+        "to_agent": true,
+        "why": [
+          "1위 확률 0.697 < 0.7"
+        ],
+        "route": "사람 확인",
+        "pattern": "Edge-Ring",
+        "seconds": 20.81,
+        "true": "Edge-Ring",
+        "end": "submitted"
+      },
+      {
+        "row": 268884,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Edge-Ring",
+        "seconds": 1.6,
+        "true": "Edge-Ring",
+        "end": "pipeline"
+      },
+      {
+        "row": 20828,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Edge-Ring",
+        "seconds": 2.8,
+        "true": "Edge-Ring",
+        "end": "pipeline"
+      },
+      {
+        "row": 231258,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Edge-Ring",
+        "seconds": 1.5,
+        "true": "Edge-Ring",
+        "end": "pipeline"
+      },
+      {
+        "row": 728460,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Edge-Ring",
+        "seconds": 1.6,
+        "true": "Edge-Ring",
+        "end": "pipeline"
+      },
+      {
+        "row": 346834,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Edge-Ring",
+        "seconds": 1.5,
+        "true": "Edge-Ring",
+        "end": "pipeline"
+      },
+      {
+        "row": 199987,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Edge-Ring",
+        "seconds": 1.6,
+        "true": "Edge-Ring",
+        "end": "pipeline"
+      },
+      {
+        "row": 717106,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Loc",
+        "seconds": 1.6,
+        "true": "Loc",
+        "end": "pipeline"
+      },
+      {
+        "row": 724350,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.578 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 49.41,
+        "true": "Loc",
+        "end": "submitted"
+      },
+      {
+        "row": 642351,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.508 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 54.12,
+        "true": "Loc",
+        "end": "submitted"
+      },
+      {
+        "row": 810573,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Loc",
+        "seconds": 1.6,
+        "true": "Loc",
+        "end": "pipeline"
+      },
+      {
+        "row": 307956,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 38.58,
+        "true": "Loc",
+        "end": "submitted"
+      },
+      {
+        "row": 108793,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Loc",
+        "seconds": 1.4,
+        "true": "Loc",
+        "end": "pipeline"
+      },
+      {
+        "row": 776163,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Loc",
+        "seconds": 1.6,
+        "true": "Loc",
+        "end": "pipeline"
+      },
+      {
+        "row": 299509,
+        "to_agent": true,
+        "why": [
+          "1위 확률 0.653 < 0.7"
+        ],
+        "route": "사람 확인",
+        "pattern": "처음 보는 패턴",
+        "seconds": 25.41,
+        "true": "Loc",
+        "end": "submitted"
+      },
+      {
+        "row": 362157,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Loc",
+        "seconds": 1.6,
+        "true": "Loc",
+        "end": "pipeline"
+      },
+      {
+        "row": 776092,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Scratch",
+        "seconds": 1.7,
+        "true": "Loc",
+        "end": "pipeline"
+      },
+      {
+        "row": 381389,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Loc",
+        "seconds": 1.7,
+        "true": "Loc",
+        "end": "pipeline"
+      },
+      {
+        "row": 760454,
+        "to_agent": true,
+        "why": [
+          "1위 확률 0.697 < 0.7"
+        ],
+        "route": "사람 확인",
+        "pattern": "처음 보는 패턴",
+        "seconds": 81.85,
+        "true": "Loc",
+        "end": "submitted"
+      },
+      {
+        "row": 728908,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Near-full",
+        "seconds": 1.7,
+        "true": "Near-full",
+        "end": "pipeline"
+      },
+      {
+        "row": 728991,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Near-full",
+        "seconds": 1.6,
+        "true": "Near-full",
+        "end": "pipeline"
+      },
+      {
+        "row": 754937,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.65 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 56.29,
+        "true": "Near-full",
+        "end": "submitted"
+      },
+      {
+        "row": 694592,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Near-full",
+        "seconds": 1.5,
+        "true": "Near-full",
+        "end": "pipeline"
+      },
+      {
+        "row": 754940,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Near-full",
+        "seconds": 3.4,
+        "true": "Near-full",
+        "end": "pipeline"
+      },
+      {
+        "row": 250192,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Near-full",
+        "seconds": 1.5,
+        "true": "Near-full",
+        "end": "pipeline"
+      },
+      {
+        "row": 256910,
+        "to_agent": true,
+        "why": [
+          "1위 확률 0.4 < 0.7"
+        ],
+        "route": "사람 확인",
+        "pattern": "처음 보는 패턴",
+        "seconds": 24.27,
+        "true": "Near-full",
+        "end": "submitted"
+      },
+      {
+        "row": 762971,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고"
+        ],
+        "route": "사람 확인",
+        "pattern": "처음 보는 패턴",
+        "seconds": 55.55,
+        "true": "Near-full",
+        "end": "no_tool_call"
+      },
+      {
+        "row": 759433,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Near-full",
+        "seconds": 3.3,
+        "true": "Near-full",
+        "end": "pipeline"
+      },
+      {
+        "row": 3143,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Near-full",
+        "seconds": 1.6,
+        "true": "Near-full",
+        "end": "pipeline"
+      },
+      {
+        "row": 803937,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Near-full",
+        "seconds": 1.5,
+        "true": "Near-full",
+        "end": "pipeline"
+      },
+      {
+        "row": 2219,
+        "to_agent": true,
+        "why": [
+          "1위 확률 0.695 < 0.7"
+        ],
+        "route": "사람 확인",
+        "pattern": "처음 보는 패턴",
+        "seconds": 7.59,
+        "true": "Near-full",
+        "end": "submitted"
+      },
+      {
+        "row": 307445,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Random",
+        "seconds": 1.5,
+        "true": "Random",
+        "end": "pipeline"
+      },
+      {
+        "row": 19360,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Random",
+        "seconds": 1.9,
+        "true": "Random",
+        "end": "pipeline"
+      },
+      {
+        "row": 654667,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.359 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 8.09,
+        "true": "Random",
+        "end": "submitted"
+      },
+      {
+        "row": 667502,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Random",
+        "seconds": 1.7,
+        "true": "Random",
+        "end": "pipeline"
+      },
+      {
+        "row": 359430,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Random",
+        "seconds": 1.9,
+        "true": "Random",
+        "end": "pipeline"
+      },
+      {
+        "row": 19368,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Random",
+        "seconds": 1.7,
+        "true": "Random",
+        "end": "pipeline"
+      },
+      {
+        "row": 19369,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Random",
+        "seconds": 1.7,
+        "true": "Random",
+        "end": "pipeline"
+      },
+      {
+        "row": 243179,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Random",
+        "seconds": 3.1,
+        "true": "Random",
+        "end": "pipeline"
+      },
+      {
+        "row": 700506,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Random",
+        "seconds": 1.8,
+        "true": "Random",
+        "end": "pipeline"
+      },
+      {
+        "row": 160855,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Random",
+        "seconds": 1.8,
+        "true": "Random",
+        "end": "pipeline"
+      },
+      {
+        "row": 21800,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Random",
+        "seconds": 1.9,
+        "true": "Random",
+        "end": "pipeline"
+      },
+      {
+        "row": 21819,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Random",
+        "seconds": 1.5,
+        "true": "Random",
+        "end": "pipeline"
+      },
+      {
+        "row": 225326,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Scratch",
+        "seconds": 1.7,
+        "true": "Scratch",
+        "end": "pipeline"
+      },
+      {
+        "row": 770839,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Scratch",
+        "seconds": 1.7,
+        "true": "Scratch",
+        "end": "pipeline"
+      },
+      {
+        "row": 382904,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Scratch",
+        "seconds": 1.9,
+        "true": "Scratch",
+        "end": "pipeline"
+      },
+      {
+        "row": 763518,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Scratch",
+        "seconds": 1.7,
+        "true": "Scratch",
+        "end": "pipeline"
+      },
+      {
+        "row": 23517,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Scratch",
+        "seconds": 1.8,
+        "true": "Scratch",
+        "end": "pipeline"
+      },
+      {
+        "row": 380542,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Scratch",
+        "seconds": 1.8,
+        "true": "Scratch",
+        "end": "pipeline"
+      },
+      {
+        "row": 759432,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Scratch",
+        "seconds": 1.8,
+        "true": "Scratch",
+        "end": "pipeline"
+      },
+      {
+        "row": 227478,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Scratch",
+        "seconds": 1.5,
+        "true": "Scratch",
+        "end": "pipeline"
+      },
+      {
+        "row": 527716,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Scratch",
+        "seconds": 2.0,
+        "true": "Scratch",
+        "end": "pipeline"
+      },
+      {
+        "row": 776054,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Scratch",
+        "seconds": 1.5,
+        "true": "Scratch",
+        "end": "pipeline"
+      },
+      {
+        "row": 793065,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Scratch",
+        "seconds": 1.6,
+        "true": "Scratch",
+        "end": "pipeline"
+      },
+      {
+        "row": 358222,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Scratch",
+        "seconds": 1.8,
+        "true": "Scratch",
+        "end": "pipeline"
+      }
+    ]
+  },
+  "a_novel": {
+    "summary": {
+      "n": 24,
+      "to_agent": 20,
+      "share_to_agent": 0.8333,
+      "mean_seconds": 51.433,
+      "routes": {
+        "새 패턴 후보": 13,
+        "사람 확인": 6,
+        "판정": 5
+      },
+      "not_verdict": 19
+    },
+    "rows": [
+      {
+        "row": 794918,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.554 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 83.19,
+        "true": "Center",
+        "end": "submitted"
+      },
+      {
+        "row": 781033,
+        "to_agent": true,
+        "why": [
+          "1위 확률 0.339 < 0.7"
+        ],
+        "route": "사람 확인",
+        "pattern": "Loc",
+        "seconds": 72.19,
+        "true": "Center",
+        "end": "submitted"
+      },
+      {
+        "row": 776161,
+        "to_agent": true,
+        "why": [
+          "1위 확률 0.626 < 0.7"
+        ],
+        "route": "판정",
+        "pattern": "none",
+        "seconds": 98.08,
+        "true": "Center",
+        "end": "submitted"
+      },
+      {
+        "row": 680205,
+        "to_agent": true,
+        "why": [
+          "1위 확률 0.65 < 0.7"
+        ],
+        "route": "사람 확인",
+        "pattern": "처음 보는 패턴",
+        "seconds": 100.66,
+        "true": "Donut",
+        "end": "no_tool_call"
+      },
+      {
+        "row": 683877,
+        "to_agent": true,
+        "why": [
+          "1위 확률 0.475 < 0.7"
+        ],
+        "route": "사람 확인",
+        "pattern": "처음 보는 패턴",
+        "seconds": 50.36,
+        "true": "Donut",
+        "end": "submitted"
+      },
+      {
+        "row": 279846,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.469 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 7.93,
+        "true": "Donut",
+        "end": "submitted"
+      },
+      {
+        "row": 341582,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Loc",
+        "seconds": 1.5,
+        "true": "Edge-Loc",
+        "end": "pipeline"
+      },
+      {
+        "row": 25483,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 87.93,
+        "true": "Edge-Loc",
+        "end": "submitted"
+      },
+      {
+        "row": 809326,
+        "to_agent": true,
+        "why": [
+          "1위 확률 0.572 < 0.7"
+        ],
+        "route": "사람 확인",
+        "pattern": "none",
+        "seconds": 97.99,
+        "true": "Edge-Loc",
+        "end": "submitted"
+      },
+      {
+        "row": 35845,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 56.63,
+        "true": "Edge-Ring",
+        "end": "submitted"
+      },
+      {
+        "row": 199678,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 79.07,
+        "true": "Edge-Ring",
+        "end": "submitted"
+      },
+      {
+        "row": 329433,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "none",
+        "seconds": 1.6,
+        "true": "Edge-Ring",
+        "end": "pipeline"
+      },
+      {
+        "row": 763708,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Center",
+        "seconds": 2.0,
+        "true": "Loc",
+        "end": "pipeline"
+      },
+      {
+        "row": 119028,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.622 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 30.77,
+        "true": "Loc",
+        "end": "submitted"
+      },
+      {
+        "row": 794558,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.428 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 31.51,
+        "true": "Loc",
+        "end": "submitted"
+      },
+      {
+        "row": 728908,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 49.22,
+        "true": "Near-full",
+        "end": "submitted"
+      },
+      {
+        "row": 763147,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 78.4,
+        "true": "Near-full",
+        "end": "submitted"
+      },
+      {
+        "row": 728558,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 80.69,
+        "true": "Near-full",
+        "end": "submitted"
+      },
+      {
+        "row": 243191,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 35.02,
+        "true": "Random",
+        "end": "submitted"
+      },
+      {
+        "row": 360910,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.386 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 20.13,
+        "true": "Random",
+        "end": "submitted"
+      },
+      {
+        "row": 618548,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.635 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 45.4,
+        "true": "Random",
+        "end": "submitted"
+      },
+      {
+        "row": 250560,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.356 < 0.7"
+        ],
+        "route": "사람 확인",
+        "pattern": "처음 보는 패턴",
+        "seconds": 60.52,
+        "true": "Scratch",
+        "end": "no_tool_call"
+      },
+      {
+        "row": 802771,
+        "to_agent": true,
+        "why": [
+          "1위 확률 0.602 < 0.7"
+        ],
+        "route": "사람 확인",
+        "pattern": "처음 보는 패턴",
+        "seconds": 61.99,
+        "true": "Scratch",
+        "end": "submitted"
+      },
+      {
+        "row": 721277,
+        "to_agent": false,
+        "why": [],
+        "route": "판정",
+        "pattern": "Loc",
+        "seconds": 1.6,
+        "true": "Scratch",
+        "end": "pipeline"
+      }
+    ]
+  },
+  "b_broken": {
+    "summary": {
+      "n": 20,
+      "to_agent": 20,
+      "share_to_agent": 1.0,
+      "mean_seconds": 48.572,
+      "routes": {
+        "사람 확인": 1,
+        "맵 이상": 16,
+        "새 패턴 후보": 3
+      },
+      "map_anomaly": 16
+    },
+    "rows": [
+      {
+        "row": 264183,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "맵 품질 이상",
+          "1위 확률 0.532 < 0.7"
+        ],
+        "route": "사람 확인",
+        "pattern": "처음 보는 패턴",
+        "seconds": 32.87,
+        "true": "라벨 없음",
+        "end": "no_tool_call"
+      },
+      {
+        "row": 272825,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "맵 품질 이상"
+        ],
+        "route": "맵 이상",
+        "pattern": "처음 보는 패턴",
+        "seconds": 12.73,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 272870,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "맵 품질 이상"
+        ],
+        "route": "맵 이상",
+        "pattern": "처음 보는 패턴",
+        "seconds": 85.9,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 313818,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "맵 품질 이상"
+        ],
+        "route": "맵 이상",
+        "pattern": "처음 보는 패턴",
+        "seconds": 56.09,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 313854,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "맵 품질 이상"
+        ],
+        "route": "맵 이상",
+        "pattern": "처음 보는 패턴",
+        "seconds": 74.97,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 344812,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "맵 품질 이상"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 46.88,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 345249,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "맵 품질 이상"
+        ],
+        "route": "맵 이상",
+        "pattern": "처음 보는 패턴",
+        "seconds": 27.56,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 345306,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "맵 품질 이상"
+        ],
+        "route": "맵 이상",
+        "pattern": "처음 보는 패턴",
+        "seconds": 44.41,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 345403,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "맵 품질 이상"
+        ],
+        "route": "맵 이상",
+        "pattern": "처음 보는 패턴",
+        "seconds": 57.85,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 352452,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "맵 품질 이상"
+        ],
+        "route": "맵 이상",
+        "pattern": "처음 보는 패턴",
+        "seconds": 38.14,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 352551,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "맵 품질 이상"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 25.49,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 366829,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "맵 품질 이상",
+          "1위 확률 0.496 < 0.7"
+        ],
+        "route": "맵 이상",
+        "pattern": "처음 보는 패턴",
+        "seconds": 56.7,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 366935,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "맵 품질 이상"
+        ],
+        "route": "맵 이상",
+        "pattern": "처음 보는 패턴",
+        "seconds": 38.25,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 367091,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "맵 품질 이상"
+        ],
+        "route": "맵 이상",
+        "pattern": "처음 보는 패턴",
+        "seconds": 42.83,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 369192,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "맵 품질 이상"
+        ],
+        "route": "맵 이상",
+        "pattern": "처음 보는 패턴",
+        "seconds": 66.36,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 369412,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "맵 품질 이상",
+          "1위 확률 0.531 < 0.7"
+        ],
+        "route": "맵 이상",
+        "pattern": "처음 보는 패턴",
+        "seconds": 73.9,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 369413,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "맵 품질 이상",
+          "1위 확률 0.462 < 0.7"
+        ],
+        "route": "맵 이상",
+        "pattern": "처음 보는 패턴",
+        "seconds": 74.84,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 369469,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "맵 품질 이상"
+        ],
+        "route": "맵 이상",
+        "pattern": "처음 보는 패턴",
+        "seconds": 53.12,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 369592,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "맵 품질 이상"
+        ],
+        "route": "맵 이상",
+        "pattern": "처음 보는 패턴",
+        "seconds": 27.46,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 429664,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "맵 품질 이상",
+          "1위 확률 0.425 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 35.09,
+        "true": "라벨 없음",
+        "end": "submitted"
+      }
+    ]
+  },
+  "c_novel_unlabeled": {
+    "summary": {
+      "n": 20,
+      "to_agent": 20,
+      "share_to_agent": 1.0,
+      "mean_seconds": 68.756,
+      "routes": {
+        "새 패턴 후보": 18,
+        "사람 확인": 2
+      }
+    },
+    "rows": [
+      {
+        "row": 244135,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.495 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 24.67,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 244126,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 89.0,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 9053,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.463 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 103.66,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 674186,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.35 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 77.44,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 674162,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.471 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 88.33,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 10288,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.223 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 35.69,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 674163,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.288 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 8.76,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 10286,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.311 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 43.77,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 751955,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.619 < 0.7"
+        ],
+        "route": "사람 확인",
+        "pattern": "처음 보는 패턴",
+        "seconds": 126.62,
+        "true": "라벨 없음",
+        "end": "no_tool_call"
+      },
+      {
+        "row": 751198,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.619 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 115.42,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 159817,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.318 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 80.08,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 159842,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.318 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 122.95,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 674178,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.258 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 78.22,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 245945,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.455 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 8.57,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 159792,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.287 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 43.7,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 482071,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.355 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 79.71,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 9057,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 73.16,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 243725,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.46 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 6.38,
+        "true": "라벨 없음",
+        "end": "submitted"
+      },
+      {
+        "row": 40849,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.684 < 0.7"
+        ],
+        "route": "사람 확인",
+        "pattern": "처음 보는 패턴",
+        "seconds": 79.68,
+        "true": "라벨 없음",
+        "end": "submit_failed"
+      },
+      {
+        "row": 674202,
+        "to_agent": true,
+        "why": [
+          "처음 보는 패턴 경고",
+          "1위 확률 0.35 < 0.7"
+        ],
+        "route": "새 패턴 후보",
+        "pattern": "처음 보는 패턴",
+        "seconds": 89.31,
+        "true": "라벨 없음",
+        "end": "submitted"
+      }
+    ]
+  },
+  "overall": {
+    "n": 160,
+    "to_agent": 77,
+    "share_to_agent": 0.4813,
+    "mean_seconds": 27.299
+  }
+}

@@ -145,6 +145,51 @@ flowchart LR
 | 경고 | 켜졌는데 원인 선택 · 꺼졌는데 '처음 보는 패턴' |
 | 점검 순서 | 처음 보는 패턴인데 고정 선택지 밖 |
 
+### 4-2. 조사 에이전트
+
+판독 에이전트는 코드가 정해진 순서로 계산하고 LLM 은 카드 한 장만 쓴다. 조사 에이전트는 사람 확인으로 넘기던 어려운 웨이퍼(새 패턴 후보 · 깨진 맵 · 낮은 확신)를 대상으로, LLM 이 어떤 도구를 부를지 정한다. 기존 파이프라인은 그대로 두고 따로 추가했다(`src/wafer/investigate.py`).
+
+| LLM 이 정하는 것 | 코드가 강제하는 것 |
+|---|---|
+| 도구 5개(`look` · `locate` · `similar` · `lot_neighbors` · `causes`)를 무엇을 몇 번 부를지 | 도구는 모두 결정적 코드이고 결과는 압축 JSON |
+| route: 판정 · 새 패턴 후보 · 맵 이상 · 사람 확인 | 근거(`evidence`)의 값은 이 세션에서 그 도구가 돌려준 값과 같아야 한다 |
+| 카드 문장과 근거로 삼을 값 | 판정은 look 1위와 같은 패턴 + 경고 꺼짐. 맵 이상은 look 이 quality_ok=false 를 보였을 때. 새 패턴 후보는 경고 켜짐 + lot_neighbors 근거. 원인 id 는 판정에서만 |
+| 언제 submit 할지 | 도구 호출 8회 한도(넘으면 "조사 한도 초과"로 사람 확인), submit 재제출 2회, 기존 `check()` |
+
+`lot_neighbors` 는 같은 로트와 번호가 ±3 이내인 이웃 로트(같은 다이 크기)에서 이 웨이퍼와 가까운 웨이퍼 수와 그 예측 패턴을 돌려준다. 가깝다는 기준은 라벨이 다른 학습 웨이퍼 쌍 20만 개의 코사인 거리 하위 5 %(`lot_s0` 0.2844)다.
+
+같은 웨이퍼로 파이프라인과 견주었다(qwen3.5:4b, 프롬프트 v3, 평가 160장). (a) 120장은 `agent_eval.json` 과 같고 학습에서 뺀 패턴은 같은 leave-one-out 체크포인트를 썼다. (b)는 라벨 없는 깨진 맵(면적 < 0.5) 20장, (c)는 품질 검사를 통과한 가장 낯선 라벨 없는 웨이퍼 20장이며 정답이 없다.
+
+| 집합 | 기준 | 조사 에이전트 | 파이프라인 v3 | 혼합 |
+|---|---|---|---|---|
+| (a) 아는 패턴 96장 | route 판정 + 정답 패턴 | 64 / 96 (66.7 %) | 83 / 96 (86.5 %) | 78 / 96 (81.3 %) |
+| (a) 학습에서 뺀 패턴 24장 | route 가 판정이 아님 | 19 / 24 (79.2 %) | 15 / 24 (62.5 %) | 19 / 24 (79.2 %) |
+| (b) 깨진 맵 20장 | route 맵 이상 | 16 / 20 (80.0 %) | 해당 route 없음 (경고 켜짐 20 / 20) | 16 / 20 (80.0 %) |
+| (c) 낯선 라벨 없는 20장 | 정답 없음 | 새 패턴 후보 18 · 사람 확인 2 | 경고 켜짐 20 / 20 | 새 패턴 후보 18 · 사람 확인 2 |
+
+혼합은 경고 켜짐 · 맵 품질 이상 · 1위 확률 0.7 미만 중 하나일 때만 에이전트(`--hybrid`), 나머지는 파이프라인이 판정한다. 0.7 은 파이프라인에 낮은 확신 규칙이 없어 따로 정한 값이며, 결과를 보기 전에 (a) 아는 패턴 96장의 확신도별 정답률로 골랐다(같은 집합에서 고른 값이라 그 행은 낙관적일 수 있다). 에이전트로 가는 비율은 전체 77 / 160 (48.1 %), 집합별 17.7 % · 83.3 % · 100 % · 100 % 이고 웨이퍼당 평균 27.3초(에이전트만 59.3초)다. 계산은 저장된 기록으로 했고 LLM 을 다시 돌리지 않았다. 혼합의 아는 패턴 정답은 파이프라인만 쓴 것보다 5장 적다. 낮은 확신 웨이퍼를 파이프라인이 맞힌 경우에도 사람 확인으로 넘기기 때문이다.
+
+| 항목 | 값 (전체 160장) |
+|---|---|
+| 도구 호출 평균 | 5.15회 (집합별 4.875 ~ 5.8) |
+| submit 첫 제출 통과 | 42 / 152 (27.6 %) |
+| 지어낸 근거로 거절된 submit | 18건, 16장 (값이 틀린 것 1 · 없는 key 15 · 부르지 않은 도구 3) |
+| 도구 호출 없이 끝남 · 제출 3회 거절 | 17장 · 5장 |
+| 웨이퍼당 시간 | 59.3초 (파이프라인 1.7 ~ 2.9초). 공유 Ollama 대기가 대부분 |
+
+- 아는 패턴은 파이프라인이 낫다. 에이전트의 사람 확인 중 상당수는 판단이 아니라 4B 모델이 submit 형식을 못 맞춰 루프가 끝난 경우다.
+- 학습에서 뺀 패턴의 차이는 경고가 꺼진 10장 중 5장을 사람 확인으로 보낸 데서 나왔다. 경고 규칙 자체는 파이프라인과 같고, 경고가 꺼진 5장은 판정으로 나가 틀렸다.
+- 깨진 맵은 맵 이상을 새 패턴 후보보다 먼저 고르라는 문장을 프롬프트에 넣은 뒤 25 %(v2, 5 / 20)에서 80 %로 올랐다. 이 수정은 결과를 본 뒤에 한 것이라 새 표본 20장으로 다시 쟀다.
+- (c)는 맞고 틀림을 말할 수 없다. 새 패턴 후보 18장 중 13장에서만 가까운 이웃 웨이퍼가 있었다.
+- 표본이 작고 시드 1회이며, 같은 웨이퍼를 두 프롬프트로 돌린 (a) 아는 패턴은 74.0 %(v2)와 66.7 %(v3)로 7점 흔들렸다. 자세한 조건 · 실패 예시 · 한계는 [`reports/2026-10-13_investigate.md`](reports/2026-10-13_investigate.md), 원자료는 [`reports/investigate_eval.json`](reports/investigate_eval.json).
+
+```bash
+python scripts/investigate.py --row 243725      # 한 장 조사 (도구 호출 기록 + 카드)
+python scripts/investigate.py --row 243725 --hybrid   # 어려운 웨이퍼만 에이전트로
+python scripts/investigate_eval.py --broken-seed 2
+python scripts/investigate_eval.py --hybrid-only      # 혼합 계산 (reports/investigate_hybrid_eval.json)
+```
+
 ### 5. 전체 81만 장 지도와 맵 품질 검사
 
 ![지도](docs/img/umap.png)
@@ -245,7 +290,9 @@ ollama pull qwen3.5:4b && python scripts/agent_eval.py
 python scripts/catchup.py --budget 0.01 --seed 0      # 나중 로트 따라잡기
 python scripts/summarize.py && python scripts/make_screen.py && python scripts/make_readme_figures.py
 python scripts/read_wafer.py --novel 1                 # 한 장 판독 (--row N · --npy 파일)
-python -m pytest                                       # pytest · hypothesis 34개
+python scripts/investigate.py --row 243725             # 조사 에이전트 (도구 호출 기록 출력)
+python scripts/investigate_eval.py --broken-seed 2     # 조사 에이전트 평가 (reports/investigate_eval.json)
+python -m pytest                                       # pytest · hypothesis 50개
 ```
 
 ### Repository Structure
@@ -259,8 +306,9 @@ python -m pytest                                       # pytest · hypothesis 34
 | `src/wafer/locate.py` | 계통 불량 덩어리 · 위치 이름 |
 | `src/wafer/reader.py` | 판정 + 경고 + 유사 사례 + 위치 → 판독 사례 |
 | `src/wafer/agent.py` · `causes.json` | LLM 판독 카드 · 코드 검사 · 원인 표 |
+| `src/wafer/investigate.py` | 조사 에이전트: 도구 5개 · submit 검사 · 도구 호출 루프 |
 | `scripts/` | 진단 · 학습 · 평가 · 따라잡기(`catchup.py`) · 화면 · 그림 · GPU 대기(`wait_gpu.sh`) |
-| `tests/` | pytest · hypothesis 34개 |
+| `tests/` | pytest · hypothesis 50개 |
 | `reports/` | 단계별 보고서 · 원자료 JSON · 판독 화면 |
 
 ## Citation
