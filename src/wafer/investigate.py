@@ -187,6 +187,19 @@ def validate_card(card, case: dict, log: list) -> list[str]:
     return probs
 
 
+def needs_agent(look: dict, low_conf: float = LOW_CONF) -> list[str]:
+    """혼합 모드의 배정 규칙. 이유가 하나라도 있으면 조사 에이전트로, 없으면 판독 파이프라인이 판정으로 처리한다.
+    look: look() 의 반환. low_conf 는 프롬프트가 안내하던 값(0.7)과 같다 — 파이프라인에는 낮은 확신 규칙이 없다."""
+    why = []
+    if look["novelty_warning"]:
+        why.append("처음 보는 패턴 경고")
+    if not look["quality_ok"]:
+        why.append("맵 품질 이상")
+    if look["top3"][0]["prob"] < low_conf:
+        why.append(f"1위 확률 {look['top3'][0]['prob']} < {low_conf}")
+    return why
+
+
 # ---------------------------------------------------------------- 조사 루프
 
 def ollama_llm(model: str = "qwen3.5:4b", url: str = OLLAMA, timeout: int = 180, seed: int | None = 0):

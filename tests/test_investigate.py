@@ -166,3 +166,11 @@ def test_card_given_as_broken_json_string_is_rejected_with_clear_reason():
     res = run(script([tc("look", row=7)], [tc("lot_neighbors", row=7)], [tc("submit", card=good[:-3])], [tc("submit", card=good)]))
     assert "JSON" in res["submits"][0]["problems"][0] and res["accepted"] and res["n_submits"] == 2
 
+
+
+def test_needs_agent_routing_rule():
+    from wafer.investigate import needs_agent
+    assert needs_agent(LOOK_OK) == []
+    assert needs_agent(LOOK_NOVEL) and needs_agent(LOOK_BROKEN)
+    assert any("0.5" in w for w in needs_agent(dict(LOOK_OK, top3=[{"pattern": "Loc", "prob": 0.5}])))
+    assert needs_agent(dict(LOOK_OK, top3=[{"pattern": "Loc", "prob": 0.7}])) == []   # 0.7 미만만 보낸다

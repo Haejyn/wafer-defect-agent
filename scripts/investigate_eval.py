@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.stdout.reconfigure(encoding="utf-8")
 from wafer.agent import OLLAMA, read_card  # noqa: E402
-from wafer.investigate import PROMPT_VERSION, Toolbox, investigate, load_data, ollama_llm  # noqa: E402
+from wafer.investigate import LOW_CONF, PROMPT_VERSION, Toolbox, needs_agent, investigate, load_data, ollama_llm  # noqa: E402
 from wafer.prep import CLASSES  # noqa: E402
 from wafer.reader import Reader  # noqa: E402
 
@@ -32,8 +32,48 @@ ap.add_argument("--n-novel", type=int, default=20)
 ap.add_argument("--broken-seed", type=int, default=None, help="깨진 맵 표본 시드(기본 seed+1)")
 ap.add_argument("--limit", type=int, default=0, help="스모크 시험: 집합마다 이만큼만")
 ap.add_argument("--out", default="investigate_eval")
+ap.add_argument("--hybrid-only", action="store_true", help="LLM 을 다시 돌리지 않고 investigate_eval.json 과 agent_eval.json 으로 혼합 모드를 계산한다")
 ap.add_argument("--from-partial", help="reports/<이름>.partial.json 의 원자료로 집계만 한다")
 args = ap.parse_args()
+
+
+def hybrid_eval():
+    """혼합 모드: needs_agent 가 이유를 대면 저장된 에이전트 기록을, 아니면 파이프라인 기록을 판정으로 쓴다."""
+    ev = json.loads((ROOT / "reports/investigate_eval.json").read_text(encoding="utf-8"))
+    old = json.loads((ROOT / "reports/agent_eval.json").read_text(encoding="utf-8"))["results"]
+    old_sec = {r["case"]["row"]: r["seconds"] for r in old}
+    new_pipe = {(k, p["row"]): p for k, v in ev["pipeline_v3_new"].items() for p in v}
+    out = {"low_conf": LOW_CONF, "rule": "경고 켜짐 또는 quality_ok=false 또는 1위 확률 < low_conf 이면 에이전트, 아니면 파이프라인 판정(look 1위 패턴)"}
+    for key, recs in ev["agent"].items():
+        rows = []
+        for r in recs:
+            why = needs_agent(r["look"])
+            if why:
+                rows.append({"row": r["row"], "to_agent": True, "why": why, "route": r["route"], "pattern": r["card"].get("pattern"), "seconds": r["seconds"], "true": r["true"], "end": r["end"]})
+            else:
+                sec = old_sec[r["labeled_index"]] if "labeled_index" in r else new_pipe[(key, r["row"])]["seconds"]
+                rows.append({"row": r["row"], "to_agent": False, "why": [], "route": "판정", "pattern": r["look"]["top3"][0]["pattern"], "seconds": sec, "true": r["true"], "end": "pipeline"})
+        n = len(rows)
+        s = {"n": n, "to_agent": sum(x["to_agent"] for x in rows), "share_to_agent": round(sum(x["to_agent"] for x in rows) / n, 4),
+             "mean_seconds": round(float(np.mean([x["seconds"] for x in rows])), 3), "routes": dict(Counter(x["route"] for x in rows))}
+        if key == "a_known":
+            s["correct_verdict"] = sum(x["route"] == "판정" and x["pattern"] == x["true"] for x in rows)
+            s["wrong_verdict"] = sum(x["route"] == "판정" and x["pattern"] != x["true"] for x in rows)
+        elif key == "a_novel":
+            s["not_verdict"] = sum(x["route"] != "판정" for x in rows)
+        elif key == "b_broken":
+            s["map_anomaly"] = sum(x["route"] == "맵 이상" for x in rows)
+        out[key] = {"summary": s, "rows": rows}
+    allrows = [x for k in ev["agent"] for x in out[k]["rows"]]
+    out["overall"] = {"n": len(allrows), "to_agent": sum(x["to_agent"] for x in allrows), "share_to_agent": round(sum(x["to_agent"] for x in allrows) / len(allrows), 4),
+                      "mean_seconds": round(float(np.mean([x["seconds"] for x in allrows])), 3)}
+    (ROOT / "reports/investigate_hybrid_eval.json").write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(json.dumps({k: (v["summary"] if isinstance(v, dict) and "summary" in v else v) for k, v in out.items() if k not in ("rule",)}, ensure_ascii=False, indent=2))
+
+
+if args.hybrid_only:
+    hybrid_eval()
+    sys.exit()
 device = "cuda"
 llm = ollama_llm(args.model, seed=args.seed)
 
